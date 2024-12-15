@@ -1,10 +1,8 @@
-﻿using InternalModBot;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System;
 using UnityEngine;
-using Newtonsoft.Json;
 
 namespace ModLibrary
 {
@@ -61,52 +59,57 @@ namespace ModLibrary
         /// <exception cref="ArgumentNullException"><paramref name="levelDescription"/> is <see langword="null"/></exception>
         public static LevelEditorLevelData GetLevelEditorLevelData(this LevelDescription levelDescription)
         {
+            //todo: update this
+
             if (levelDescription is null)
                 throw new ArgumentNullException(nameof(levelDescription));
 
+            /*
             LevelEditorLevelData levelEditorLevelData = null;
-			if (levelDescription.LevelTags.Contains(LevelTags.LevelEditor))
-			{
-				string prefabPath = "Data/LevelEditorLevels/" + levelDescription.PrefabName;
+            if (levelDescription.LevelTags.Contains(LevelTags.LevelEditor))
+            {
+                string prefabPath = "Data/LevelEditorLevels/" + levelDescription.PrefabName;
                 UnityEngine.Object levelJsonObject = Resources.Load(prefabPath);
                 if (levelJsonObject == null)
-				{
-					UnityEngine.Debug.LogError("[GetLevelEditorLevelData] Could not load level with path " + prefabPath + " | levelID: " + levelDescription.LevelID);
-					return null;
-				}
+                {
+                    UnityEngine.Debug.LogError("[GetLevelEditorLevelData] Could not load level with path " + prefabPath + " | levelID: " + levelDescription.LevelID);
+                    return null;
+                }
 
                 levelEditorLevelData = JsonConvert.DeserializeObject<LevelEditorLevelData>((levelJsonObject as TextAsset).text, DataRepository.Instance.GetSettings());
-			}
+            }
 
-			if (levelDescription.IsStreamedMultiplayerLevel)
-			{
-				string levelJSON = MultiplayerLevelStreamingManager.Instance.GetLevelJSON(levelDescription.LevelID);
-				levelEditorLevelData = JsonConvert.DeserializeObject<LevelEditorLevelData>(levelJSON, DataRepository.Instance.GetSettings());
-			}
-			else if (levelDescription.IsPlayfabHostedLevel)
-			{
-				bool loadedLevelData;
-				if (GameVersionManager.IsConsoleBuild() && !GameVersionManager.IsUnityEditor())
-				{
-					loadedLevelData = DataRepository.Instance.levelDataContainer.TryGetLevelEditorLevelData(levelDescription.LevelJSONPath, out levelEditorLevelData);
-				}
-				else
-				{
-					loadedLevelData = DataRepository.Instance.TryLoad(levelDescription.LevelJSONPath, out levelEditorLevelData, false);
-				}
+            if (levelDescription.IsStreamedMultiplayerLevel)
+            {
+                string levelJSON = MultiplayerLevelStreamingManager.Instance.GetLevelJSON(levelDescription.LevelID);
+                levelEditorLevelData = JsonConvert.DeserializeObject<LevelEditorLevelData>(levelJSON, DataRepository.Instance.GetSettings());
+            }
+            else if (levelDescription.IsPlayfabHostedLevel)
+            {
+                bool loadedLevelData;
+                if (GameVersionManager.IsConsoleBuild() && !GameVersionManager.IsUnityEditor())
+                {
+                    loadedLevelData = DataRepository.Instance.levelDataContainer.TryGetLevelEditorLevelData(levelDescription.LevelJSONPath, out levelEditorLevelData);
+                }
+                else
+                {
+                    loadedLevelData = DataRepository.Instance.TryLoad(levelDescription.LevelJSONPath, out levelEditorLevelData, false);
+                }
 
-				if (!loadedLevelData)
-				{
-					UnityEngine.Debug.LogError("[LevelManager.SpawnCurrentLevel] Count not load level " + levelDescription.LevelID);
+                if (!loadedLevelData)
+                {
+                    UnityEngine.Debug.LogError("[LevelManager.SpawnCurrentLevel] Count not load level " + levelDescription.LevelID);
                     return null;
-				}
-			}
-			else if (levelDescription.IsLevelEditorLevel() && !GameModeManager.UsesWorkshopChallengeLevels())
-			{
-				levelEditorLevelData = LevelManager.Instance.LoadLevelEditorLevelData(levelDescription.LevelJSONPath);
-			}
+                }
+            }
+            else if (levelDescription.IsLevelEditorLevel() && !GameModeManager.UsesWorkshopChallengeLevels())
+            {
+                levelEditorLevelData = LevelManager.Instance.LoadLevelEditorLevelData(levelDescription.LevelJSONPath);
+            }
 
-			return levelEditorLevelData;
-		}
+            return levelEditorLevelData;*/
+
+            return null;
+        }
     }
 }

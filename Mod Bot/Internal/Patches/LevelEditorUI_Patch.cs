@@ -1,7 +1,4 @@
 ﻿using HarmonyLib;
-using ModLibrary;
-using System.Collections.Generic;
-using System.Reflection;
 
 namespace InternalModBot
 {
@@ -9,7 +6,7 @@ namespace InternalModBot
     static class LevelEditorUI_Patch
     {
         [HarmonyPrefix]
-        [HarmonyPatch("IsAnyDialogueOpen")]
+        [HarmonyPatch(nameof(LevelEditorUI.IsAnyDialogueOpen))]
         static bool IsAnyDialogueOpen_Prefix(ref bool __result)
         {
             if (areAnyModdedDialogsOpen())
@@ -22,8 +19,9 @@ namespace InternalModBot
                 return true;
             }
         }
+
         [HarmonyPrefix]
-        [HarmonyPatch("AreAnyDialogsOpen")]
+        [HarmonyPatch(nameof(LevelEditorUI.AreAnyDialogsOpen))]
         static bool AreAnyDialogsOpen_Prefix(ref bool __result)
         {
             if (areAnyModdedDialogsOpen())
@@ -38,7 +36,7 @@ namespace InternalModBot
         }
         private static bool areAnyModdedDialogsOpen()
         {
-            var ui = ModBotUIRoot._instance;
+            ModBotUIRoot ui = ModBotUIRoot._instance;
             return ui.Generic2ButtonDialogeUI.UIRoot.activeInHierarchy ||
                 ui.ModBotSignInUI.WindowObject.activeInHierarchy ||
                 ui.ModCreationWindow.TheGameObject.activeInHierarchy ||

@@ -1,26 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ModLibrary;
-using InternalModBot;
-using UnityEngine;
-
-namespace InternalModBot.LevelEditor
+﻿namespace InternalModBot.LevelEditor
 {
-	/// <summary>
-	/// Used by mod-bot to handle custom leveleditor stuff
-	/// </summary>
-	internal static class ModBotCustomLevelEditorManager
-	{
-		/// <summary>
-		/// Sets up the all custom leveleditor things
-		/// </summary>
-		public static void Init()
-		{
-			// Will be updated to work in a later version of mod-bot
-			/*
+    /// <summary>
+    /// Used by mod-bot to handle custom leveleditor stuff
+    /// </summary>
+    internal static class ModBotCustomLevelEditorManager
+    {
+        /// <summary>
+        /// Sets up the all custom leveleditor things
+        /// </summary>
+        public static void Init()
+        {
+            // Will be updated to work in a later version of mod-bot
+            /*
 			GameObject scriptableObject = InternalAssetBundleReferences.ModBot.GetObject("ScriptableObject");
 			Texture2D texture = InternalAssetBundleReferences.ModBot.GetObject<Texture2D>("script");
 			scriptableObject.AddComponent<Scriptable>();
@@ -29,6 +20,6 @@ namespace InternalModBot.LevelEditor
 			LevelEditorObjectAdder.AddObject("Mod-Bot", "ScriptableObject", scriptableObject.transform, texture);
 			*/
 
-		}
-	}
+        }
+    }
 }

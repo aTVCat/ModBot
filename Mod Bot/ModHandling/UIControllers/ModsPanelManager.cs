@@ -29,7 +29,7 @@ namespace InternalModBot
         {
             Vector3 pauseScreenButtonOffset = new Vector3(0f, 1.2f, 0f);
 
-            GameObject titleScreenContainer = TransformUtils.FindChildRecursive(GameUIRoot.Instance.TitleScreenUI.RootButtonsContainer, "BottomButtons").gameObject; // Gets the lower buttons container
+            GameObject titleScreenContainer = TransformUtils.FindChildRecursive(GameUIRoot.Instance.TitleScreenUI.RootButtonsContainerBG.transform, "BottomButtons").gameObject; // Gets the lower buttons container
 
             // Copy the options button to make into the Mods button
             GameObject modsButtonPrefab = TransformUtils.FindChildRecursive(titleScreenContainer.transform, "OptionsButton").gameObject; // Gets the options button (we copy it and replace its organs and face)
@@ -61,7 +61,7 @@ namespace InternalModBot
             ModBotUIRoot.Instance.ModsWindow.GetMoreModsButton.onClick.AddListener(onGetMoreModsClicked); // Add more mods clicked callback
             ModBotUIRoot.Instance.ModsWindow.OpenModsFolderButton.onClick.AddListener(onModsFolderClicked); // Add mods folder clicked callback
 
-            Transform image = Instantiate(GameUIRoot.Instance.TitleScreenUI.CreditsUI.transform.GetChild(1), GameUIRoot.Instance.TitleScreenUI.CreditsUI.transform);
+            /*Transform image = Instantiate(GameUIRoot.Instance.TitleScreenUI.CreditsUI.transform.GetChild(1), GameUIRoot.Instance.TitleScreenUI.CreditsUI.transform);
             image.gameObject.SetActive(true);
             image.GetComponent<Image>().sprite = InternalAssetBundleReferences.ModBot.GetObject<Sprite>("modbot");
             image.GetComponent<RectTransform>().localScale = new Vector3(image.GetComponent<RectTransform>().localScale.x * 1.5f, image.GetComponent<RectTransform>().localScale.y * 0.375f, 1f);
@@ -80,7 +80,7 @@ namespace InternalModBot
 
             GameUIRoot.Instance.TitleScreenUI.CreditsUI.transform.GetChild(1).GetComponent<RectTransform>().position += new Vector3(7f, 0f);
             GameUIRoot.Instance.TitleScreenUI.CreditsUI.transform.GetChild(3).GetComponent<RectTransform>().position += new Vector3(7f, 0f);
-            GameUIRoot.Instance.TitleScreenUI.CreditsUI.transform.GetChild(4).GetComponent<RectTransform>().position += new Vector3(7f, 0f);
+            GameUIRoot.Instance.TitleScreenUI.CreditsUI.transform.GetChild(4).GetComponent<RectTransform>().position += new Vector3(7f, 0f);*/
 
             ReloadModItems();
 
@@ -115,8 +115,8 @@ namespace InternalModBot
             SettingsMenuTabButton tabButton = spawnedButtonContainer.GetComponentInChildren<SettingsMenuTabButton>();
             buttons[buttons.Length - 1] = tabButton;
             GameUIRoot.Instance.SettingsMenu.TabButtons = buttons;
-            GameUIRoot.Instance.SettingsMenu.TabNavigationSetter.TabButtons = null;
-            GameUIRoot.Instance.SettingsMenu.TabNavigationSetter.InitializeSetter();
+            /*GameUIRoot.Instance.SettingsMenu.TabNavigationSetter.TabButtons = null;
+            GameUIRoot.Instance.SettingsMenu.TabNavigationSetter.InitializeSetter();*/
 
             GameObject settingsPage = Instantiate(InternalAssetBundleReferences.ModBot.GetObject("ModBotSettings"), tabButton.ContentToShow.parent);
             tabButton.ContentToShow = settingsPage.transform;
@@ -139,7 +139,7 @@ namespace InternalModBot
 
         private void openModsMenu()
         {
-            GameUIRoot.Instance.SetEscMenuDisabled(true);
+            //GameUIRoot.Instance.SetEscMenuDisabled(true);
 
             ModBotUIRoot.Instance.ModsWindow.WindowObject.SetActive(true);
             ModBotUIRoot.Instance.ModsWindow.CreateModButton.gameObject.SetActive(ModCreationWindow.CanBeShown);
@@ -149,7 +149,7 @@ namespace InternalModBot
         private void closeModsMenu()
         {
             ModBotUIRoot.Instance.ModsWindow.WindowObject.SetActive(false);
-            GameUIRoot.Instance.SetEscMenuDisabled(false);
+            //GameUIRoot.Instance.SetEscMenuDisabled(false);
 
             if (_actionOnModsPanelClose != null)
             {
@@ -162,20 +162,6 @@ namespace InternalModBot
         private void onGetMoreModsClicked()
         {
             ModBotUIRootNew.DownloadWindow.Show();
-            return;
-            ModBotUIRoot.Instance.ModDownloadPage.WindowObject.SetActive(true);
-
-            ModBotUIRoot.Instance.ModDownloadPage.XButton.onClick = new Button.ButtonClickedEvent();
-            ModBotUIRoot.Instance.ModDownloadPage.XButton.onClick.AddListener(delegate
-            {
-                ModBotUIRoot.Instance.ModDownloadPage.WindowObject.SetActive(false);
-            });
-
-            //ModBotUIRoot.Instance.ModDownloadPage.StartCoroutine(downloadModData(ModBotUIRoot.Instance.ModDownloadPage));
-            ModBotUIRoot.Instance.ModDownloadPage.ErrorWindow.gameObject.SetActive(false);
-            ModBotUIRoot.Instance.ModDownloadPage.LoadingPopup.gameObject.SetActive(true);
-            TransformUtils.DestroyAllChildren(ModBotUIRoot.Instance.ModDownloadPage.Content.transform);
-            ModsDownloadManager.DownloadModsData(onModInfosLoadingEnd, onModInfosLoadingError);
         }
 
         private static void onModInfosLoadingEnd(ModsHolder? loadedData)
@@ -273,7 +259,7 @@ namespace InternalModBot
 
             Button BroadcastButton = modItemModdedObject.GetObject<Button>(6);
             BroadcastButton.onClick.AddListener(delegate { onBroadcastButtonClicked(mod.ModReference); });
-            BroadcastButton.gameObject.SetActive(GameModeManager.IsMultiplayer());
+            BroadcastButton.gameObject.SetActive(false);
 
             Button deleteModButton = modItemModdedObject.GetObject_Alt<Button>(7);
             deleteModButton.onClick.AddListener(delegate { deleteMod(mod); });
@@ -291,12 +277,6 @@ namespace InternalModBot
 
         private static void onBroadcastButtonClicked(Mod mod)
         {
-            new Generic2ButtonDialogue(ModBotLocalizationManager.FormatLocalizedStringFromID("mods_menu_broadcast_confirm_message", mod.ModInfo.DisplayName),
-            LocalizationManager.Instance.GetTranslatedString("mods_menu_broadcast_confirm_no"), null,
-            LocalizationManager.Instance.GetTranslatedString("mods_menu_broadcast_confirm_yes"), delegate
-            {
-                ModSharingManager.SendModToAllModBotClients(mod.ModInfo.UniqueID);
-            });
         }
 
         private static void deleteMod(LoadedModInfo mod)

@@ -4,9 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModLibrary
 {
@@ -125,7 +122,7 @@ namespace ModLibrary
                 }
                 catch (JsonException jsonError)
                 {
-                    throw new Exception($"JsonConvert.DeserializeObject failed with argument \"{serializedDictionary}\", {nameof(levelData)}: {levelData.Title} [{levelData.GeneratedUniqueID}], {nameof(owner)}: {owner.ModInfo.MainDLLFileName}", jsonError);
+                    throw new Exception($"JsonConvert.DeserializeObject failed with argument \"{serializedDictionary}\", {nameof(levelData)}: [{levelData.GeneratedUniqueID}], {nameof(owner)}: {owner.ModInfo.MainDLLFileName}", jsonError);
                 }
 
                 return metadataForMod;

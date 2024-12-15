@@ -174,7 +174,7 @@ namespace InternalModBot
             }
             m_LikesCount.text = m_SpecialData["Likes"].ToObject<string>();
             m_DownloadCount.text = m_SpecialData["Downloads"].ToObject<string>();
-            var isVerified = m_SpecialData["Verified"].ToObject<bool>();
+            bool isVerified = m_SpecialData["Verified"].ToObject<bool>();
             if (!isVerified)
             {
                 m_NotVerifiedIcon.gameObject.SetActive(true);

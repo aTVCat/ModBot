@@ -1,17 +1,4 @@
-﻿using ModLibrary;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.UI;
-using InternalModBot.Scripting;
-using System.Diagnostics;
-using System.Windows.Forms;
-
-// This was used as custom level editor stuff, pushed up until 2.1 or something like that for now
+﻿// This was used as custom level editor stuff, pushed up until 2.1 or something like that for now
 
 /*
 namespace InternalModBot.LevelEditor

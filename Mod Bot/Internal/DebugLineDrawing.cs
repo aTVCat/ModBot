@@ -1,11 +1,6 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using ModLibrary;
-using System.Collections;
 
 namespace InternalModBot
 {
@@ -30,20 +25,14 @@ namespace InternalModBot
             Camera main = Camera.main;
             if (main == null)
             {
-                FirstPersonMover player = CharacterTracker.Instance.GetPlayerRobot();
-                if (player == null)
-                    return;
-
-                main = player.GetPlayerCamera();
-                if (main == null)
-                    return;
-
+                //todo: search for VRPlayerCharacter camera
+                return;
             }
             if (main.GetComponent<DebugLineDrawer>() == null)
             {
                 main.gameObject.AddComponent<DebugLineDrawer>();
             }
-            
+
             StartCoroutine(runAtEndOfFrame());
         }
 
@@ -75,7 +64,7 @@ namespace InternalModBot
             {
                 GL.Begin(GL.LINES);
 
-                for(int i = 0; i < Instance._linesToDraw.Count; i++)
+                for (int i = 0; i < Instance._linesToDraw.Count; i++)
                 {
                     _lineMaterial.SetPass(0);
 

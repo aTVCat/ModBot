@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,7 +23,7 @@ namespace InternalModBot
                 _fpsCounter.gameObject.SetActive(!_fpsCounter.gameObject.activeSelf);
 
             float time = Time.unscaledTime;
-            if(time < _timeToRefresh)
+            if (time < _timeToRefresh)
             {
                 return;
             }

@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using ModLibrary;
+﻿using ModLibrary;
+using UnityEngine;
 
 namespace InternalModBot
 {
@@ -9,7 +9,7 @@ namespace InternalModBot
     internal class CloseModOptionsWindowOnEscapeKey : MonoBehaviour
     {
         ModOptionsWindowBuilder _owner;
-        
+
         /// <summary>
         /// Sets the owner to the value passed
         /// </summary>
@@ -21,7 +21,7 @@ namespace InternalModBot
 
         void Update()
         {
-            if(Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
                 _owner.CloseWindow();
                 Destroy(this);

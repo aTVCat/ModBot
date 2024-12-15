@@ -1,9 +1,6 @@
 ﻿// New mod loading system
 using ModLibrary;
 using System.Collections.Generic;
-using UnityEngine;
-using System;
-using TwitchChatter;
 #pragma warning disable CS0618 // We dont care if its depricated sincei
 
 namespace InternalModBot
@@ -13,32 +10,6 @@ namespace InternalModBot
     /// </summary>
     public class PassOnToModsManager : Mod
     {
-        /// <summary>
-        /// Calls this method on all mods
-        /// </summary>
-        /// <param name="me"></param>
-        protected internal override void OnFirstPersonMoverSpawned(FirstPersonMover me)
-        {
-            List<Mod> mods = ModsManager.Instance.GetAllLoadedActiveMods();
-            for (int i = 0; i < mods.Count; i++)
-            {
-                mods[i].OnFirstPersonMoverSpawned(me);
-            }
-        }
-
-        /// <summary>
-        /// Calls this method on all mods
-        /// </summary>
-        /// <param name="me"></param>
-        protected internal override void OnFirstPersonMoverUpdate(FirstPersonMover me)
-        {
-            List<Mod> mods = ModsManager.Instance.GetAllLoadedActiveMods();
-            for (int i = 0; i < mods.Count; i++)
-            {
-                mods[i].OnFirstPersonMoverUpdate(me);
-            }
-        }
-
         /// <summary>
         /// Calls this method on all mods
         /// </summary>
@@ -80,36 +51,11 @@ namespace InternalModBot
         }
 
         /// <summary>
-        /// Calls this method on all mods
-        /// </summary>
-        /// <param name="me"></param>
-        /// <param name="upgrades"></param>
-        protected internal override void OnUpgradesRefreshed(FirstPersonMover me, UpgradeCollection upgrades)
-        {
-            FirstPersonMover firstPersonMover = me.GetComponent<FirstPersonMover>();
-            if (!firstPersonMover.IsAlive() || firstPersonMover.GetCharacterModel() == null)
-            {
-                return;
-            }
-
-            List<Mod> mods = ModsManager.Instance.GetAllLoadedActiveMods();
-            for (int i = 0; i < mods.Count; i++)
-            {
-                mods[i].OnUpgradesRefreshed(me, upgrades);
-            }
-        }
-
-        /// <summary>
         /// Calls this method on all mods, also calls OnFirstPersonMoverSpawned if the passed character is a FirstPersonMover
         /// </summary>
         /// <param name="me"></param>
         protected internal override void OnCharacterSpawned(Character me)
         {
-            if (me.GetComponent<Character>() is FirstPersonMover)
-            {
-                OnFirstPersonMoverSpawned(me as FirstPersonMover);
-            }
-
             List<Mod> mods = ModsManager.Instance.GetAllLoadedActiveMods();
             for (int i = 0; i < mods.Count; i++)
             {
@@ -123,41 +69,10 @@ namespace InternalModBot
         /// <param name="me"></param>
         protected internal override void OnCharacterUpdate(Character me)
         {
-            if (me.GetComponent<Character>() is FirstPersonMover)
-            {
-                OnFirstPersonMoverUpdate(me as FirstPersonMover);
-            }
-
             List<Mod> mods = ModsManager.Instance.GetAllLoadedActiveMods();
             for (int i = 0; i < mods.Count; i++)
             {
                 mods[i].OnCharacterUpdate(me);
-            }
-        }
-
-        /// <summary>
-        /// Moved from <see cref="CalledFromInjections"/>, checks for <see langword="null"/> and calls <see cref="AfterUpgradesRefreshed(FirstPersonMover, UpgradeCollection)"/>
-        /// </summary>
-        /// <param name="firstPersonMover"></param>
-        protected internal static void AfterUpgradesRefreshed(FirstPersonMover firstPersonMover)
-        {
-            if (firstPersonMover == null || firstPersonMover.gameObject == null || !firstPersonMover.IsAlive() || firstPersonMover.GetCharacterModel() == null)
-                return;
-
-            ModsManager.Instance.PassOnMod.AfterUpgradesRefreshed(firstPersonMover, firstPersonMover.GetComponent<UpgradeCollection>());
-        }
-
-        /// <summary>
-        /// Calls this method on all mods
-        /// </summary>
-        /// <param name="owner"></param>
-        /// <param name="upgrades"></param>
-        protected internal override void AfterUpgradesRefreshed(FirstPersonMover owner, UpgradeCollection upgrades)
-        {
-            List<Mod> mods = ModsManager.Instance.GetAllLoadedActiveMods();
-            for (int i = 0; i < mods.Count; i++)
-            {
-                mods[i].AfterUpgradesRefreshed(owner, upgrades);
             }
         }
 
@@ -196,7 +111,7 @@ namespace InternalModBot
         protected internal override bool ShouldCursorBeEnabled() // if any mod tells the game that the cursor should be enabled, it will be
         {
             List<Mod> mods = ModsManager.Instance.GetAllLoadedActiveMods();
-            foreach(Mod mod in mods)
+            foreach (Mod mod in mods)
             {
                 if (mod.ShouldCursorBeEnabled())
                     return true;
@@ -220,28 +135,15 @@ namespace InternalModBot
         /// <summary>
         /// Calls this method on all mods
         /// </summary>
-        /// <param name="moddedEvent"></param>
-        protected internal override void OnMultiplayerEventReceived(GenericStringForModdingEvent moddedEvent)
-        {
-            List<Mod> mods = ModsManager.Instance.GetAllLoadedActiveMods();
-            for (int i = 0; i < mods.Count; i++)
-            {
-                mods[i].OnMultiplayerEventReceived(moddedEvent);
-            }
-        }
-
-        /// <summary>
-        /// Calls this method on all mods
-        /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
         protected internal override UnityEngine.Object OnResourcesLoad(string path)
         {
             List<Mod> mods = ModsManager.Instance.GetAllLoadedActiveMods();
-            for(int i = 0; i < mods.Count; i++)
+            for (int i = 0; i < mods.Count; i++)
             {
                 UnityEngine.Object obj = mods[i].OnResourcesLoad(path);
-                if(obj != null)
+                if (obj != null)
                     return obj;
             }
 
@@ -266,35 +168,23 @@ namespace InternalModBot
         /// Calls this method on all mods
         /// </summary>
         protected internal override void OnClientConnectedToServer()
-		{
-			List<Mod> mods = ModsManager.Instance.GetAllLoadedActiveMods();
-			for(int i = 0; i < mods.Count; i++)
-			{
-				mods[i].OnClientConnectedToServer();
-			}
-		}
-
-		/// <summary>
-		/// Calls this method on all mods
-		/// </summary>
-		protected internal override void OnClientDisconnectedFromServer()
-		{
-			List<Mod> mods = ModsManager.Instance.GetAllLoadedActiveMods();
-			for(int i = 0; i < mods.Count; i++)
-			{
-				mods[i].OnClientDisconnectedFromServer();
-			}
-		}
-
-        /// <summary>
-        /// Calls this method on all mods
-        /// </summary>
-        protected internal override void OnTwitchChatMessage(TwitchChatMessage message)
         {
             List<Mod> mods = ModsManager.Instance.GetAllLoadedActiveMods();
             for (int i = 0; i < mods.Count; i++)
             {
-                mods[i].OnTwitchChatMessage(message);
+                mods[i].OnClientConnectedToServer();
+            }
+        }
+
+        /// <summary>
+        /// Calls this method on all mods
+        /// </summary>
+        protected internal override void OnClientDisconnectedFromServer()
+        {
+            List<Mod> mods = ModsManager.Instance.GetAllLoadedActiveMods();
+            for (int i = 0; i < mods.Count; i++)
+            {
+                mods[i].OnClientDisconnectedFromServer();
             }
         }
     }

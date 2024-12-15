@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModLibrary
 {
@@ -19,7 +16,7 @@ namespace ModLibrary
         /// <param name="callback">The <see cref="Action"/> to invoke when the event is dispatched</param>
         public static void TryAddEventListenerOnce(this GlobalEventManager globalEventManager, string eventName, Action callback)
         {
-            List<object> onceCallbackList = globalEventManager.getOnceCallbackList(eventName);
+            List<object> onceCallbackList = globalEventManager.getOnceListenersFor(eventName);
 
             if (!onceCallbackList.Contains(callback))
                 onceCallbackList.Add(callback);
@@ -34,7 +31,7 @@ namespace ModLibrary
         /// <param name="callback">The <see cref="Action{T}"/> to invoke when the event is dispatched</param>
         public static void TryAddEventListenerOnce<T>(this GlobalEventManager globalEventManager, string eventName, Action<T> callback)
         {
-            List<object> onceCallbackList = globalEventManager.getOnceCallbackList(eventName);
+            List<object> onceCallbackList = globalEventManager.getOnceListenersFor(eventName);
 
             if (!onceCallbackList.Contains(callback))
                 onceCallbackList.Add(callback);
@@ -49,7 +46,7 @@ namespace ModLibrary
         /// <param name="callback">The <see cref="Action{T}"/> to invoke when the event is dispatched</param>
         public static void TryAddEventListener<T>(this GlobalEventManager globalEventManager, string eventName, Action<T> callback)
         {
-            List<object> callbackList = globalEventManager.getCallbackList(eventName);
+            List<object> callbackList = globalEventManager.getEventListenersFor(eventName);
 
             if (!callbackList.Contains(callback))
                 callbackList.Add(callback);
@@ -63,7 +60,7 @@ namespace ModLibrary
         /// <param name="callback">The <see cref="Action"/> to invoke when the event is dispatched</param>
         public static void TryAddEventListener(this GlobalEventManager globalEventManager, string eventName, Action callback)
         {
-            List<object> callbackList = globalEventManager.getCallbackList(eventName);
+            List<object> callbackList = globalEventManager.getEventListenersFor(eventName);
 
             if (!callbackList.Contains(callback))
                 callbackList.Add(callback);

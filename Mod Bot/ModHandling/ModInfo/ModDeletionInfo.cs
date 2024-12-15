@@ -1,11 +1,7 @@
 ﻿using ModLibrary;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace InternalModBot
@@ -16,10 +12,10 @@ namespace InternalModBot
 
         public static void SaveModDeletionInfo(in ModInfo info)
         {
-            if(info != null)
+            if (info != null)
             {
-                if(!ModsAboutToBeRemoved.Contains(info.UniqueID))
-                ModsAboutToBeRemoved.Add(info.UniqueID);
+                if (!ModsAboutToBeRemoved.Contains(info.UniqueID))
+                    ModsAboutToBeRemoved.Add(info.UniqueID);
             }
             else
             {
@@ -45,7 +41,7 @@ namespace InternalModBot
             {
                 return;
             }
-            for(int i = ModsAboutToBeRemoved.Count - 1; i > -1; i--)
+            for (int i = ModsAboutToBeRemoved.Count - 1; i > -1; i--)
             {
                 if (ModsAboutToBeRemoved[i] == id)
                 {
@@ -56,7 +52,7 @@ namespace InternalModBot
 
         public static bool HasID(string id)
         {
-            foreach(string info in ModsAboutToBeRemoved)
+            foreach (string info in ModsAboutToBeRemoved)
             {
                 if (info == id)
                 {

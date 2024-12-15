@@ -57,8 +57,6 @@ namespace InternalModBot
                 }
                 else // If the mod is being disabled
                 {
-                    UpgradePagesManager.RemoveUpgradePage(OwnerModInfo.UniqueID);
-
                     new Harmony(ModReference.HarmonyID).UnpatchAll(ModReference.HarmonyID); // unpatches all of the patches made by the mod
 
                     ModReference.OnModDeactivated();

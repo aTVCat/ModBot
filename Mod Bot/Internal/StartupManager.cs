@@ -1,11 +1,9 @@
-﻿using ModLibrary;
-using Rewired;
+﻿using InternalModBot.LevelEditor;
+using ModLibrary;
 using System;
 using System.Diagnostics;
 using System.IO;
 using UnityEngine;
-using UnityEngine.UI;
-using InternalModBot.LevelEditor;
 
 namespace InternalModBot
 {
@@ -32,16 +30,8 @@ namespace InternalModBot
             modBotManagers.AddComponent<ModsManager>();
             modBotManagers.AddComponent<UpdateChecker>();                     // Checks for new Mod-Bot versions
             modBotManagers.AddComponent<ModsPanelManager>();                  // Adds the mods button in the main menu and pause screen
-            modBotManagers.AddComponent<CustomUpgradeManager>();              // Handles modded upgrades
-            modBotManagers.AddComponent<UpgradeIconDownloader>();             // Downloads images from a URL to be used as an upgrade icon
-            modBotManagers.AddComponent<ModdedMultiplayerEventListener>();    // Recieves all multiplayer events and sends them to any mods that has configured to recieve them
-            modBotManagers.AddComponent<ModSharingManager>();                 // Handles sharing of mods to all clients on the same server
-            modBotManagers.AddComponent<ModBotUserIdentifier>();              // Keeps track of what users are currently using Mod-Bot
-            modBotManagers.AddComponent<UpgradeAngleSetter>();                // Handles setting upgrade angles while in-game
             modBotManagers.AddComponent<DebugLineDrawingManager>();           // Handles drawing lines on screen
             modBotManagers.AddComponent<VersionLabelManager>();               // Handles custom version label stuff
-            modBotManagers.AddComponent<MultiplayerPlayerNameManager>();      // Handles custom player tags and name overrides in multiplayer
-            modBotManagers.AddComponent<ModdedTwitchManager>();               // Handles twitch chat messages
 
             try // If an exception is thrown here, the crash screen wont appear, so we have to implement our own
             {
@@ -57,7 +47,6 @@ namespace InternalModBot
 
             ModBotCustomLevelEditorManager.Init();
 
-            GlobalEventManager.Instance.AddEventListener(GlobalEvents.UpgradesRefreshed, new Action<FirstPersonMover>(PassOnToModsManager.AfterUpgradesRefreshed));
             GlobalEventManager.Instance.AddEventListener(GlobalEvents.LevelEditorStarted, new Action(ModsManager.Instance.PassOnMod.OnLevelEditorStarted));
 
             IgnoreCrashesManager.Start();
@@ -73,7 +62,7 @@ namespace InternalModBot
 
             ModBotUIRoot modBotUIRoot = spawnedUI.AddComponent<ModBotUIRoot>();
             modBotUIRoot.Init(spawedUIModdedObject);
-            
+
         }
     }
 }

@@ -1,9 +1,6 @@
 ﻿using HarmonyLib;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InternalModBot
 {
@@ -38,9 +35,9 @@ namespace InternalModBot
         /// <returns></returns>
         public static bool ShouldMouseBeEnabled()
         {
-            for(int i = 0; i < _registeredHandlers.Count; i++)
+            for (int i = 0; i < _registeredHandlers.Count; i++)
             {
-                if(_registeredHandlers[i]())
+                if (_registeredHandlers[i]())
                     return true;
             }
 
@@ -56,7 +53,8 @@ namespace InternalModBot
             {
                 if (ShouldMouseBeEnabled() || ModsManager.Instance == null || ModsManager.Instance.PassOnMod.ShouldCursorBeEnabled())
                 {
-                    InputManager.Instance.SetCursorEnabled(true);
+                    //todo: update this
+                    //InputManager.Instance.SetCursorEnabled(true);
                     return false;
                 }
 

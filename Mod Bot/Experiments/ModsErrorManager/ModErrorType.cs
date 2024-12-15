@@ -1,6 +1,6 @@
 ﻿namespace InternalModBot
 {
-    internal enum ModErrorType 
+    internal enum ModErrorType
     {
         None,
         IOError,

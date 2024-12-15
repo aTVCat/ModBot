@@ -101,18 +101,6 @@ namespace ModLibrary
         }
 
         /// <summary>
-        /// Checks whether or not the given <see cref="UpgradeType"/> and level is already in use by an <see cref="UpgradeDescription"/>
-        /// </summary>
-        /// <param name="upgradeManager"></param>
-        /// <param name="ID">The ID of the upgrade</param>
-        /// <param name="Level"></param>
-        /// <returns></returns>
-        public static bool IsUpgradeTypeAndLevelUsed(this UpgradeManager upgradeManager, UpgradeType ID, int Level = 1)
-        {
-            return UpgradeManager.Instance.GetUpgrade(ID, Level) != null;
-        }
-
-        /// <summary>
         /// Gets the first found <see cref="MechBodyPart"/> of the given <see cref="MechBodyPartType"/> (Returns <see langword="null"/> if the given <see cref="Character"/> does not have the specified <see cref="MechBodyPartType"/>)
         /// </summary>
         /// <param name="character"></param>
@@ -179,37 +167,6 @@ namespace ModLibrary
             }
 
             return bodyParts;
-        }
-
-        /// <summary>
-        /// Gets the first found <see cref="MindSpaceBodyPart"/> of the given <see cref="MechBodyPartType"/> (Returns <see langword="null"/> if the given <see cref="Character"/> does not have the specified <see cref="MechBodyPartType"/>)
-        /// </summary>
-        /// <param name="character"></param>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public static MindSpaceBodyPart GetMindSpaceBodyPart(this Character character, MechBodyPartType type)
-        {
-            return character.GetBaseBodyPart(type) as MindSpaceBodyPart;
-        }
-
-        /// <summary>
-        /// Gets all <see cref="MindSpaceBodyPart"/>s of the given <see cref="MechBodyPartType"/>
-        /// </summary>
-        /// <param name="character"></param>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public static List<MindSpaceBodyPart> GetMindSpaceBodyParts(this Character character, MechBodyPartType type)
-        {
-            List<BaseBodyPart> baseBodyParts = character.GetBaseBodyParts(type);
-            List<MindSpaceBodyPart> mindSpaceBodyParts = new List<MindSpaceBodyPart>();
-
-            foreach (BaseBodyPart baseBodyPart in baseBodyParts)
-            {
-                if (baseBodyPart is MindSpaceBodyPart mindSpaceBodyPart)
-                    mindSpaceBodyParts.Add(mindSpaceBodyPart);
-            }
-
-            return mindSpaceBodyParts;
         }
     }
 }

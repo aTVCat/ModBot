@@ -58,13 +58,10 @@
     <Compile Include="Experiments\UI\ModInfoUIVizualizator.cs" />
     <Compile Include="Experiments\WebisteInteraction\ModBotWebsiteInteraction.cs" />
     <Compile Include="Generic2ButtonDialogue.cs" />
-    <Compile Include="Internal\ModdedTwitchManager.cs" />
     <Compile Include="Internal\Patches\Character_Patch.cs" />
-    <Compile Include="Internal\Patches\ErrorManager_Patch.cs" />
+    <Compile Include="Internal\Patches\AnalyticsManager_Patch.cs" />
     <Compile Include="Internal\Patches\ErrorWindow_Patch.cs" />
     <Compile Include="Internal\Patches\LevelEditorUI_Patch.cs" />
-    <Compile Include="Internal\Patches\EscMenu_Patch.cs" />
-    <Compile Include="Internal\Patches\FirstPersonMover_Patch.cs" />
     <Compile Include="Internal\Patches\LevelManager_SpawnCurrentLevel_ReversePatch.cs" />
     <Compile Include="Internal\Patches\ResourceRequest_Patch.cs" />
     <Compile Include="Internal\Patches\Resources_Patch.cs" />
@@ -82,8 +79,6 @@
     <Compile Include="Internal\UI\ModCreationWindow.cs" />
     <Compile Include="Internal\UI\ModTagButton.cs" />
     <Compile Include="Internal\WaitForTask.cs" />
-    <Compile Include="ModdedUpgrades\ModdedUpgradesPage.cs" />
-    <Compile Include="ModdedUpgrades\UpgradeUtilities.cs" />
     <Compile Include="Internal\ProgressBar.cs" />
     <Compile Include="ModHandling\ModDownloading\ModDownloadManager.cs" />
     <Compile Include="ModHandling\ModInfo\ModDeletionInfo.cs" />
@@ -122,8 +117,6 @@
     <Compile Include="Internal\UI\ModBotSignInUI.cs" />
     <Compile Include="Internal\UI\FPSCounterUI.cs" />
     <Compile Include="Internal\UI\ModBotUIRoot.cs" />
-    <Compile Include="Internal\MultiplayerPlayerNameManager.cs" />
-    <Compile Include="Internal\NameTagRefreshListener.cs" />
     <Compile Include="Internal\RegisterShouldCursorBeEnabledDelegate.cs" />
     <Compile Include="Internal\StartupManager.cs" />
     <Compile Include="Internal\UI\ModDownloadPage.cs" />
@@ -133,11 +126,6 @@
     <Compile Include="Internal\VersionLabelManager.cs" />
     <Compile Include="LevelEditorObjectAdder.cs" />
     <Compile Include="Internal\UI\ConsoleUI.cs" />
-    <Compile Include="ModdedUpgrades\CustomUpgradeManager.cs" />
-    <Compile Include="ModdedUpgrades\UpgradeAngleSetter.cs" />
-    <Compile Include="ModdedUpgrades\UpgradeExtensionMethods.cs" />
-    <Compile Include="ModdedUpgrades\ModdedUpgradeTypeAndLevel.cs" />
-    <Compile Include="ModdedUpgrades\UpgradePagesManager.cs" />
     <Compile Include="Internal\CloseModOptionsWindowOnEscapeKey.cs" />
     <Compile Include="Internal\LoadedModInfo.cs" />
     <Compile Include="ModHandling\MainModClassAttribute.cs" />
@@ -158,8 +146,6 @@
     <Compile Include="ModHandling\UIControllers\ModdedOptionItemTypes\ModdedOptionSliderItem.cs" />
     <Compile Include="ModHandling\UIControllers\ModOptionWindowBuilder.cs" />
     <Compile Include="ModHandling\UIControllers\ModsPanelManager.cs" />
-    <Compile Include="ModUtilities\CharacterInputRestrictor.cs" />
-    <Compile Include="ModUtilities\ExtensionMethods\FirstPersonMoverExtensions.cs" />
     <Compile Include="ModUtilities\ExtensionMethods\GlobalEventManagerExtensions.cs" />
     <Compile Include="ModUtilities\ExtensionMethods\IEnumerableExtensions.cs" />
     <Compile Include="ModUtilities\ExtensionMethods\SingleExtensions.cs" />
@@ -171,14 +157,6 @@
     <Compile Include="ModUtilities\ModTools.cs" />
     <Compile Include="Internal\OptionsSaver.cs" />
     <Compile Include="ModHandling\PassOnToModsManager.cs" />
-    <Compile Include="ModUtilities\MultiplayerTools\ModBotUserIdentifier.cs" />
-    <Compile Include="ModUtilities\MultiplayerTools\ModSharingManager.cs" />
-    <Compile Include="ModUtilities\MultiplayerTools\MultiplayerEventCallback.cs" />
-    <Compile Include="ModUtilities\MultiplayerTools\MultiplayerEventListener.cs" />
-    <Compile Include="ModUtilities\MultiplayerTools\MultiplayerMessageSender.cs" />
-    <Compile Include="ModUtilities\UpgradeIconDownloader.cs" />
-    <Compile Include="ModUtilities\YieldInstructions\WaitForCharacterModelAndUpgradeInitialization.cs" />
-    <Compile Include="ModUtilities\YieldInstructions\WaitForCharacterModelInitialization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Internal\UpdateChecker.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -198,27 +176,18 @@
     <Reference Include="0Harmony">
       <HintPath>..\UsedDlls\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Assembly-CSharp">
       <HintPath>..\UsedDlls\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\UsedDlls\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
-    <Reference Include="bolt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\UsedDlls\bolt.dll</HintPath>
-    </Reference>
-    <Reference Include="bolt.user, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\UsedDlls\bolt.user.dll</HintPath>
-    </Reference>
     <Reference Include="Esprima, Version=1.0.1258.0, Culture=neutral, PublicKeyToken=2e92ba9c8d81157f, processorArchitecture=MSIL">
       <HintPath>..\packages\Esprima.1.0.1258\lib\net45\Esprima.dll</HintPath>
     </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=1.3.2.10, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpZipLib.1.3.2\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\UsedDlls\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Jint, Version=0.0.0.0, Culture=neutral, PublicKeyToken=2e92ba9c8d81157f, processorArchitecture=MSIL">
       <HintPath>..\packages\Jint.3.0.0-beta-1715\lib\net45\Jint.dll</HintPath>
@@ -235,10 +204,6 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\UsedDlls\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Rewired_Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\UsedDlls\Rewired_Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -278,6 +243,12 @@
     <Reference Include="UnityEngine.IMGUIModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\UsedDlls\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>..\UsedDlls\UnityEngine.InputLegacyModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputModule">
+      <HintPath>..\UsedDlls\UnityEngine.InputModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ParticleSystemModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

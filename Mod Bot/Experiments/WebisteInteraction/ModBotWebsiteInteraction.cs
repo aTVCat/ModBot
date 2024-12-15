@@ -14,16 +14,16 @@ namespace InternalModBot
 
         private static IEnumerator requestAllModInfos(Action<UnityWebRequest> webRequestVariable, Action<ModsHolder?> downloadedData, Action<string> onCaughtError = null)
         {
-            using(UnityWebRequest webRequest = UnityWebRequest.Get("https://modbot.org/api?operation=getAllModInfos"))
+            using (UnityWebRequest webRequest = UnityWebRequest.Get("https://modbot.org/api?operation=getAllModInfos"))
             {
                 webRequest.timeout = 9;
                 webRequestVariable(webRequest);
 
                 yield return StaticCoroutineRunner.StartStaticCoroutine(updateProgressOfAsyncOperation(webRequest.SendWebRequest()));
 
-                if(webRequest.isNetworkError || webRequest.isHttpError)
+                if (webRequest.isNetworkError || webRequest.isHttpError)
                 {
-                    if(onCaughtError != null)
+                    if (onCaughtError != null)
                     {
                         onCaughtError("Cannot load mods page. Error details: " + webRequest.error + "\nTry visiting the website");
                     }

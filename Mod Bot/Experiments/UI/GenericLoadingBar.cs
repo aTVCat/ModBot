@@ -34,7 +34,7 @@ namespace ModLibrary
 
         public void SetProgress(float value)
         {
-            if(m_ProgressBar == null)
+            if (m_ProgressBar == null)
             {
                 return;
             }

@@ -1,9 +1,7 @@
-﻿using ModLibrary;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
 
 namespace InternalModBot
 {
@@ -56,8 +54,8 @@ namespace InternalModBot
             _isInitialized = true;
         }
 
-		private void OnEndEdit(string arg0)
-		{
+        private void OnEndEdit(string arg0)
+        {
             // If the console is not up, dont run any commands
             if (!_isShownOnScreen)
                 return;
@@ -76,7 +74,7 @@ namespace InternalModBot
                 return;
 
             if (Input.GetKeyDown(ModBotInputManager.GetKeyCode(ModBotInputType.OpenConsole)))
-				Flip();
+                Flip();
         }
 
         internal void Flip()
@@ -114,7 +112,7 @@ namespace InternalModBot
             Console.WriteLine(whatToLog);
         }
         void log(string whatToLog, string prefix = "", string postfix = "")
-		{
+        {
             if (!_isInitialized)
                 return;
 
@@ -144,17 +142,17 @@ namespace InternalModBot
                 }
 
                 for (int j = 0; j < lineText.Length; j++)
-				{
+                {
                     if (containsStringAt(j, lineText, "<color="))
-					{
+                    {
                         if ((j + "<color=".Length) < lineText.Length)
                         {
                             string value = lineText.Substring(j + "<color=".Length, "#ff00ff".Length);
                             stack.Push(new TagHolder(TagHolder.TagTypes.Color, false, value));
                         }
-					}
-                    else if(containsStringAt(j, lineText, "<b>"))
-					{
+                    }
+                    else if (containsStringAt(j, lineText, "<b>"))
+                    {
                         stack.Push(new TagHolder(TagHolder.TagTypes.Bold, false, null));
                     }
                     else if (containsStringAt(j, lineText, "<i>"))
@@ -162,23 +160,23 @@ namespace InternalModBot
                         stack.Push(new TagHolder(TagHolder.TagTypes.Italics, false, null));
                     }
                     else if (containsStringAt(j, lineText, "</i>") || containsStringAt(j, lineText, "</b>") || containsStringAt(j, lineText, "</color>"))
-					{
+                    {
                         if (stack.Count > 0)
-						{
+                        {
                             stack.Pop();
 
                         }
-                            
+
                     }
                 }
 
                 lineText = prefix + tagPrefix + lineText;
 
                 Queue<TagHolder> tagsToClose = new Queue<TagHolder>(stack);
-				while (tagsToClose.Count > 0)
-				{
+                while (tagsToClose.Count > 0)
+                {
                     lineText += tagsToClose.Dequeue().GetEndTag();
-				}
+                }
                 lineText += postfix;
 
                 lineText = lineText.Replace("\n", ""); // we are already splitting by newlines, no need to have the newline characters anymore
@@ -195,8 +193,8 @@ namespace InternalModBot
                 }
             }
 
-            while(_lines.Count > MAX_LINES_COUNT)
-			{
+            while (_lines.Count > MAX_LINES_COUNT)
+            {
                 Destroy(_lines.Dequeue().gameObject);
             }
 
@@ -239,9 +237,9 @@ namespace InternalModBot
         }
 
         bool containsStringAt(int index, string str, string substr)
-		{
-			for (int i = index; i < str.Length; i++)
-			{
+        {
+            for (int i = index; i < str.Length; i++)
+            {
                 int subStrIndex = i - index;
 
                 if (substr.Length <= subStrIndex)
@@ -252,15 +250,15 @@ namespace InternalModBot
             }
 
             return true;
-		}
+        }
 
         class TagHolder
-		{
+        {
             public TagHolder(TagTypes tagType, bool isEndTag, string content)
-			{
+            {
                 TagType = tagType;
                 Content = content;
-			}
+            }
 
             public TagTypes TagType;
             public string Content;
@@ -287,7 +285,7 @@ namespace InternalModBot
                 }
             }
             public string GetEndTag()
-			{
+            {
                 switch (TagType)
                 {
                     case TagTypes.Color:

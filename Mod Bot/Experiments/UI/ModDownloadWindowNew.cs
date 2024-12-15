@@ -75,7 +75,7 @@ namespace InternalModBot
 
         public void ShowModsWithMatchingNames(string name)
         {
-            foreach(ModInfoUIVizualizator ui in m_ModInfos)
+            foreach (ModInfoUIVizualizator ui in m_ModInfos)
             {
                 if (string.IsNullOrWhiteSpace(name))
                 {
@@ -106,7 +106,7 @@ namespace InternalModBot
                 m_ModInfos.Add(v);
 
                 index++;
-                if(index >= 9)
+                if (index >= 9)
                 {
                     wait = 0.1f;
                 }
@@ -136,7 +136,7 @@ namespace InternalModBot
         {
             Hide();
             ModBotUIRootNew.LoadingBar.SetActive(false);
-            if(ModBotUIRoot.Instance.ModsWindow.WindowObject.activeSelf) ModErrorManager.ShowModBotSiteError(error);
+            if (ModBotUIRoot.Instance.ModsWindow.WindowObject.activeSelf) ModErrorManager.ShowModBotSiteError(error);
         }
 
         public void OpenWebsite()
@@ -147,7 +147,7 @@ namespace InternalModBot
         public void OpenInformationWindow(ModInfo info, Dictionary<string, JToken> specialData, Texture previewImage)
         {
             m_InformationWindow.gameObject.SetActive(info != null && specialData != null);
-            if(info == null || specialData == null)
+            if (info == null || specialData == null)
             {
                 return;
             }
