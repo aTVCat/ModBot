@@ -58,8 +58,11 @@
     <Compile Include="Experiments\UI\ModInfoUIVizualizator.cs" />
     <Compile Include="Experiments\WebisteInteraction\ModBotWebsiteInteraction.cs" />
     <Compile Include="Generic2ButtonDialogue.cs" />
+    <Compile Include="Internal\HandCanvasPointerClicker.cs" />
     <Compile Include="Internal\Patches\Character_Patch.cs" />
     <Compile Include="Internal\Patches\AnalyticsManager_Patch.cs" />
+    <Compile Include="Internal\Patches\EscMenu_Patch.cs" />
+    <Compile Include="Internal\Patches\VRPlayerCharacter_Patch.cs" />
     <Compile Include="Internal\Patches\ErrorWindow_Patch.cs" />
     <Compile Include="Internal\Patches\LevelEditorUI_Patch.cs" />
     <Compile Include="Internal\Patches\LevelManager_SpawnCurrentLevel_ReversePatch.cs" />
@@ -78,6 +81,7 @@
     <Compile Include="Internal\Reflection\ReflectionUtils.cs" />
     <Compile Include="Internal\UI\ModCreationWindow.cs" />
     <Compile Include="Internal\UI\ModTagButton.cs" />
+    <Compile Include="Internal\KeyboardMousePlayerController.cs" />
     <Compile Include="Internal\WaitForTask.cs" />
     <Compile Include="Internal\ProgressBar.cs" />
     <Compile Include="ModHandling\ModDownloading\ModDownloadManager.cs" />
@@ -124,7 +128,6 @@
     <Compile Include="Internal\UI\ModSuggestingUI.cs" />
     <Compile Include="Internal\UI\ModsWindow.cs" />
     <Compile Include="Internal\VersionLabelManager.cs" />
-    <Compile Include="LevelEditorObjectAdder.cs" />
     <Compile Include="Internal\UI\ConsoleUI.cs" />
     <Compile Include="Internal\CloseModOptionsWindowOnEscapeKey.cs" />
     <Compile Include="Internal\LoadedModInfo.cs" />
@@ -150,7 +153,6 @@
     <Compile Include="ModUtilities\ExtensionMethods\SingleExtensions.cs" />
     <Compile Include="ModUtilities\ExtensionMethods\StringAndByteArrayConverterExtensions.cs" />
     <Compile Include="ModUtilities\ExtensionMethods\Vector3Extensions.cs" />
-    <Compile Include="ModUtilities\InputRestrictions.cs" />
     <Compile Include="ModUtilities\Layers.cs" />
     <Compile Include="ModUtilities\ModdedSettings.cs" />
     <Compile Include="ModUtilities\ModTools.cs" />

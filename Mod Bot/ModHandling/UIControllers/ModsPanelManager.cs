@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
@@ -25,35 +26,38 @@ namespace InternalModBot
 
         private void Start()
         {
-            Vector3 pauseScreenButtonOffset = new Vector3(0f, 1.2f, 0f);
+            if (GameUIRoot.Instance)
+            {
+                Vector3 pauseScreenButtonOffset = new Vector3(0f, 1.2f, 0f);
 
-            GameObject titleScreenContainer = TransformUtils.FindChildRecursive(GameUIRoot.Instance.TitleScreenUI.RootButtonsContainerBG.transform, "BottomButtons").gameObject; // Gets the lower buttons container
+                GameObject titleScreenContainer = TransformUtils.FindChildRecursive(GameUIRoot.Instance.TitleScreenUI.RootButtonsContainerBG.transform, "BottomButtons").gameObject; // Gets the lower buttons container
 
-            // Copy the options button to make into the Mods button
-            GameObject modsButtonPrefab = TransformUtils.FindChildRecursive(titleScreenContainer.transform, "OptionsButton").gameObject; // Gets the options button (we copy it and replace its organs and face)
-            GameObject mainMenuModsButton = Instantiate(modsButtonPrefab, titleScreenContainer.transform);
+                // Copy the options button to make into the Mods button
+                GameObject modsButtonPrefab = TransformUtils.FindChildRecursive(titleScreenContainer.transform, "OptionsButton").gameObject; // Gets the options button (we copy it and replace its organs and face)
+                GameObject mainMenuModsButton = Instantiate(modsButtonPrefab, titleScreenContainer.transform);
 
-            mainMenuModsButton.GetComponentInChildren<LocalizedTextField>().LocalizationID = "modsbutton"; // Set LocalizationID
-            mainMenuModsButton.transform.SetSiblingIndex(1);
+                mainMenuModsButton.GetComponentInChildren<LocalizedTextField>().LocalizationID = "modsbutton"; // Set LocalizationID
+                mainMenuModsButton.transform.SetSiblingIndex(1);
 
-            GameObject pauseScreenModsButton = Instantiate(GameUIRoot.Instance.EscMenu.SettingsButton.transform.gameObject, GameUIRoot.Instance.EscMenu.SettingsButton.transform.parent); // All of these lines edit the buttons on the pause menu
-            GameUIRoot.Instance.EscMenu.ReturnToGameButton.transform.position += pauseScreenButtonOffset;
-            GameUIRoot.Instance.EscMenu.SettingsButton.transform.position += pauseScreenButtonOffset;
-            GameUIRoot.Instance.EscMenu.AchievementsButton.transform.position -= pauseScreenButtonOffset;
-            GameUIRoot.Instance.EscMenu.ExitButton.transform.position -= pauseScreenButtonOffset;
-            GameUIRoot.Instance.EscMenu.ExitConfirmUI.transform.position -= pauseScreenButtonOffset;
-            GameUIRoot.Instance.EscMenu.MainMenuButton.transform.position -= pauseScreenButtonOffset;
-            GameUIRoot.Instance.EscMenu.MainMenuConfirmUI.transform.position -= pauseScreenButtonOffset;
+               /* GameObject pauseScreenModsButton = Instantiate(GameUIRoot.Instance.EscMenu.SettingsButton.transform.gameObject, GameUIRoot.Instance.EscMenu.SettingsButton.transform.parent); // All of these lines edit the buttons on the pause menu
+                GameUIRoot.Instance.EscMenu.ReturnToGameButton.transform.position += pauseScreenButtonOffset;
+                GameUIRoot.Instance.EscMenu.SettingsButton.transform.position += pauseScreenButtonOffset;
+                GameUIRoot.Instance.EscMenu.AchievementsButton.transform.position -= pauseScreenButtonOffset;
+                GameUIRoot.Instance.EscMenu.ExitButton.transform.position -= pauseScreenButtonOffset;
+                GameUIRoot.Instance.EscMenu.ExitConfirmUI.transform.position -= pauseScreenButtonOffset;
+                GameUIRoot.Instance.EscMenu.MainMenuButton.transform.position -= pauseScreenButtonOffset;
+                GameUIRoot.Instance.EscMenu.MainMenuConfirmUI.transform.position -= pauseScreenButtonOffset;
 
-            pauseScreenModsButton.transform.position -= pauseScreenButtonOffset;
-            pauseScreenModsButton.GetComponentInChildren<LocalizedTextField>().LocalizationID = "modsbutton";
+                pauseScreenModsButton.transform.position -= pauseScreenButtonOffset;
+                pauseScreenModsButton.GetComponentInChildren<LocalizedTextField>().LocalizationID = "modsbutton";*/
+
+                mainMenuModsButton.GetComponent<Button>().onClick = new Button.ButtonClickedEvent(); // This is used to remove the persistent listeners that the options button has
+                mainMenuModsButton.GetComponent<Button>().onClick.AddListener(openModsMenu); // Add open menu callback
+                //pauseScreenModsButton.GetComponent<Button>().onClick = new Button.ButtonClickedEvent(); // This is used to remove the persistent listeners that the options button has
+                //pauseScreenModsButton.GetComponent<Button>().onClick.AddListener(openModsMenu); // Add open menu callback
+            }
 
             ModBotUIRoot.Instance.ModsWindow.WindowObject.SetActive(false);
-
-            mainMenuModsButton.GetComponent<Button>().onClick = new Button.ButtonClickedEvent(); // This is used to remove the persistent listeners that the options button has
-            mainMenuModsButton.GetComponent<Button>().onClick.AddListener(openModsMenu); // Add open menu callback
-            pauseScreenModsButton.GetComponent<Button>().onClick = new Button.ButtonClickedEvent(); // This is used to remove the persistent listeners that the options button has
-            pauseScreenModsButton.GetComponent<Button>().onClick.AddListener(openModsMenu); // Add open menu callback
 
             ModBotUIRoot.Instance.ModsWindow.CloseButton.onClick.AddListener(closeModsMenu); // Add close menu button callback
             ModBotUIRoot.Instance.ModsWindow.GetMoreModsButton.onClick.AddListener(onGetMoreModsClicked); // Add more mods clicked callback
@@ -276,13 +280,13 @@ namespace InternalModBot
 
         private void Update()
         {
-            if (!ModBotUIRootNew.DownloadWindow.gameObject.activeInHierarchy)
+            /*if (!ModBotUIRootNew.DownloadWindow.gameObject.activeInHierarchy)
             {
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     closeModsMenu();
                 }
-            }
+            }*/
             //if (ModsDownloadManager.IsLoadingModInfos())
             //{
             //    UnityWebRequest r = ModsDownloadManager.GetModInfosWebRequest();
