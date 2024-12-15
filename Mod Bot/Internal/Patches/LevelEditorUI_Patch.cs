@@ -5,7 +5,7 @@ namespace InternalModBot
     [HarmonyPatch(typeof(LevelEditorUI))]
     static class LevelEditorUI_Patch
     {
-        [HarmonyPrefix]
+        /*[HarmonyPrefix]
         [HarmonyPatch(nameof(LevelEditorUI.IsAnyDialogueOpen))]
         static bool IsAnyDialogueOpen_Prefix(ref bool __result)
         {
@@ -33,7 +33,8 @@ namespace InternalModBot
             {
                 return true;
             }
-        }
+        }*/
+
         private static bool areAnyModdedDialogsOpen()
         {
             ModBotUIRoot ui = ModBotUIRoot._instance;

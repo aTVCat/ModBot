@@ -19,11 +19,11 @@ namespace InternalModBot
             ModsManager.Instance.PassOnMod.OnCharacterUpdate(__instance);
         }*/
 
-        [HarmonyPrefix]
+        /*[HarmonyPrefix]
         [HarmonyPatch(nameof(Character.onDeath))]
         static void onDeath_Prefix(Character __instance, Character killer, DamageSourceType damageSourceType, int attackID)
         {
             ModsManager.Instance.PassOnMod.OnCharacterKilled(__instance, killer, damageSourceType, attackID);
-        }
+        }*/
     }
 }

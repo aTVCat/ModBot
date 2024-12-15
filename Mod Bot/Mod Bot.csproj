@@ -81,7 +81,7 @@
     <Compile Include="Internal\WaitForTask.cs" />
     <Compile Include="Internal\ProgressBar.cs" />
     <Compile Include="ModHandling\ModDownloading\ModDownloadManager.cs" />
-    <Compile Include="ModHandling\ModInfo\ModDeletionInfo.cs" />
+    <Compile Include="ModHandling\ModInfo.cs" />
     <Compile Include="ModUtilities\CodeInstrucionComparisonMode.cs" />
     <Compile Include="ModUtilities\ExtensionMethods\StringExtensions.cs" />
     <Compile Include="ModUtilities\LevelEditor\LevelEditorModdedMetadataManager.cs" />
@@ -131,7 +131,6 @@
     <Compile Include="ModHandling\MainModClassAttribute.cs" />
     <Compile Include="ModHandling\Mod.cs" />
     <Compile Include="ModHandling\ModDownloading\ModDownloadInfoItem.cs" />
-    <Compile Include="ModHandling\ModInfo\ModInfo.cs" />
     <Compile Include="ModHandling\ModLoadError.cs" />
     <Compile Include="ModHandling\ModsManager.cs" />
     <Compile Include="ModHandling\UIControllers\KeyCodeInput.cs" />

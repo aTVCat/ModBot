@@ -47,7 +47,7 @@ namespace InternalModBot
         [HarmonyPatch]
         static class Patches
         {
-            [HarmonyPrefix]
+            /*[HarmonyPrefix]
             [HarmonyPatch(typeof(GameUIRoot), "RefreshCursorEnabled")]
             static bool GameUIRoot_RefreshCursorEnabled_Prefix()
             {
@@ -59,7 +59,7 @@ namespace InternalModBot
                 }
 
                 return true;
-            }
+            }*/
         }
     }
 }

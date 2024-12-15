@@ -1256,6 +1256,93 @@
             Closes the window
             </summary>
         </member>
+        <member name="T:ModLibrary.ModInfo">
+            <summary>
+            Describes information about a mod, most of this information will come from the ModInfo.json file in your mod
+            </summary>
+        </member>
+        <member name="M:ModLibrary.ModInfo.AreAllEssentialFieldsAssigned(System.String@)">
+            <summary>
+            Checks if all required fields are filled out
+            </summary>
+            <param name="errorMessage">If some field is not filled out, information about which field wasn't filled out. Otherwise null</param>
+            <returns></returns>
+        </member>
+        <member name="M:ModLibrary.ModInfo.FixFieldValues">
+            <summary>
+            Fixes some fields if they are not properly assigned, should only really be used from mod-bot internals
+            </summary>
+        </member>
+        <member name="P:ModLibrary.ModInfo.DisplayName">
+            <summary>
+            The name of the mod
+            </summary>
+        </member>
+        <member name="P:ModLibrary.ModInfo.UniqueID">
+            <summary>
+            The uuid of the mod
+            </summary>
+        </member>
+        <member name="P:ModLibrary.ModInfo.MainDLLFileName">
+            <summary>
+            The name of the main dll of the mod
+            </summary>
+        </member>
+        <member name="P:ModLibrary.ModInfo.Author">
+            <summary>
+            The author of the mod
+            </summary>
+        </member>
+        <member name="P:ModLibrary.ModInfo.Version">
+            <summary>
+            The mod version
+            </summary>
+        </member>
+        <member name="P:ModLibrary.ModInfo.ImageFileName">
+            <summary>
+            The name of the tumbnail image that goes with the mod
+            </summary>
+        </member>
+        <member name="P:ModLibrary.ModInfo.Description">
+            <summary>
+            A brief description of the mod
+            </summary>
+        </member>
+        <member name="P:ModLibrary.ModInfo.ModDependencies">
+            <summary>
+            The uuids of the dependecies of this mod
+            </summary>
+        </member>
+        <member name="P:ModLibrary.ModInfo.Tags">
+            <summary>
+            The tags used on this mod
+            </summary>
+        </member>
+        <member name="P:ModLibrary.ModInfo.FolderPath">
+            <summary>
+            The complete path to this mods folder
+            </summary>
+        </member>
+        <member name="P:ModLibrary.ModInfo.DLLPath">
+            <summary>
+            The complete path to the main dll file of the mod
+            </summary>
+        </member>
+        <member name="P:ModLibrary.ModInfo.HasImage">
+            <summary>
+            True if this mod has an image provided, false otherwise
+            </summary>
+        </member>
+        <member name="P:ModLibrary.ModInfo.CachedImage">
+            <summary>
+            The image to be displayed in the mods menu
+            </summary>
+        </member>
+        <member name="P:ModLibrary.ModInfo.IsModEnabled">
+            <summary>
+            NOTE: setting this value only sets the playerPrefs, use <see cref="P:InternalModBot.LoadedModInfo.IsEnabled"/> to work with loaded mods
+            </summary>
+        </member>
         <member name="T:ModLibrary.CodeInstrucionComparisonMode">
             <summary>
             Specifies what determines if two <see cref="T:HarmonyLib.CodeInstruction"/>s are considered equal
@@ -1820,93 +1907,6 @@
         <member name="M:ModLibrary.Mod.OnClientDisconnectedFromServer">
             <summary>
             Called when we disconnect from a multiplayer server
-            </summary>
-        </member>
-        <member name="T:ModLibrary.ModInfo">
-            <summary>
-            Describes information about a mod, most of this information will come from the ModInfo.json file in your mod
-            </summary>
-        </member>
-        <member name="M:ModLibrary.ModInfo.AreAllEssentialFieldsAssigned(System.String@)">
-            <summary>
-            Checks if all required fields are filled out
-            </summary>
-            <param name="errorMessage">If some field is not filled out, information about which field wasn't filled out. Otherwise null</param>
-            <returns></returns>
-        </member>
-        <member name="M:ModLibrary.ModInfo.FixFieldValues">
-            <summary>
-            Fixes some fields if they are not properly assigned, should only really be used from mod-bot internals
-            </summary>
-        </member>
-        <member name="P:ModLibrary.ModInfo.DisplayName">
-            <summary>
-            The name of the mod
-            </summary>
-        </member>
-        <member name="P:ModLibrary.ModInfo.UniqueID">
-            <summary>
-            The uuid of the mod
-            </summary>
-        </member>
-        <member name="P:ModLibrary.ModInfo.MainDLLFileName">
-            <summary>
-            The name of the main dll of the mod
-            </summary>
-        </member>
-        <member name="P:ModLibrary.ModInfo.Author">
-            <summary>
-            The author of the mod
-            </summary>
-        </member>
-        <member name="P:ModLibrary.ModInfo.Version">
-            <summary>
-            The mod version
-            </summary>
-        </member>
-        <member name="P:ModLibrary.ModInfo.ImageFileName">
-            <summary>
-            The name of the tumbnail image that goes with the mod
-            </summary>
-        </member>
-        <member name="P:ModLibrary.ModInfo.Description">
-            <summary>
-            A brief description of the mod
-            </summary>
-        </member>
-        <member name="P:ModLibrary.ModInfo.ModDependencies">
-            <summary>
-            The uuids of the dependecies of this mod
-            </summary>
-        </member>
-        <member name="P:ModLibrary.ModInfo.Tags">
-            <summary>
-            The tags used on this mod
-            </summary>
-        </member>
-        <member name="P:ModLibrary.ModInfo.FolderPath">
-            <summary>
-            The complete path to this mods folder
-            </summary>
-        </member>
-        <member name="P:ModLibrary.ModInfo.DLLPath">
-            <summary>
-            The complete path to the main dll file of the mod
-            </summary>
-        </member>
-        <member name="P:ModLibrary.ModInfo.HasImage">
-            <summary>
-            True if this mod has an image provided, false otherwise
-            </summary>
-        </member>
-        <member name="P:ModLibrary.ModInfo.CachedImage">
-            <summary>
-            The image to be displayed in the mods menu
-            </summary>
-        </member>
-        <member name="P:ModLibrary.ModInfo.IsModEnabled">
-            <summary>
-            NOTE: setting this value only sets the playerPrefs, use <see cref="P:InternalModBot.LoadedModInfo.IsEnabled"/> to work with loaded mods
             </summary>
         </member>
         <member name="T:ModLibrary.KeyCodeInput">

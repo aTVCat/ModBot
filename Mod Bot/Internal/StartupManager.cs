@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace InternalModBot
 {
@@ -19,6 +20,14 @@ namespace InternalModBot
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
+
+            // this is temp
+            string str = SceneTransitionManager.Instance.VRLoadingScenePrefab.name;
+            foreach(GameObject gameObject in SceneManager.GetActiveScene().GetRootGameObjects())
+            {
+                if (gameObject.name.Contains(str))
+                    gameObject.SetActive(false);
+            }
 
             ModBotHarmonyInjectionManager.TryInject();
 
@@ -42,10 +51,9 @@ namespace InternalModBot
             catch (Exception e)
             {
                 debug.Log(e.Message + "\n" + e.StackTrace, Color.red);
+
                 ModBotUIRoot.Instance.ConsoleUI.Animator.Play("hideConsole");
             }
-
-            ModBotCustomLevelEditorManager.Init();
 
             GlobalEventManager.Instance.AddEventListener(GlobalEvents.LevelEditorStarted, new Action(ModsManager.Instance.PassOnMod.OnLevelEditorStarted));
 
@@ -58,11 +66,10 @@ namespace InternalModBot
         static void initilizeUI()
         {
             GameObject spawnedUI = InternalAssetBundleReferences.ModBot.InstantiateObject("Canvas");
-            ModdedObject spawedUIModdedObject = spawnedUI.GetComponent<ModdedObject>();
 
+            ModdedObject spawedUIModdedObject = spawnedUI.GetComponent<ModdedObject>();
             ModBotUIRoot modBotUIRoot = spawnedUI.AddComponent<ModBotUIRoot>();
             modBotUIRoot.Init(spawedUIModdedObject);
-
         }
     }
 }

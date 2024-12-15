@@ -81,9 +81,6 @@ namespace InternalModBot
 
             ModDownloadPage = gameObject.AddComponent<ModDownloadPage>();
             ModDownloadPage.Init(moddedObject.GetObject<ModdedObject>(10));
-
-            ModCreationWindow = gameObject.AddComponent<ModCreationWindow>();
-            ModCreationWindow.Init(moddedObject.GetObject_Alt<ModdedObject>(11));
         }
     }
 

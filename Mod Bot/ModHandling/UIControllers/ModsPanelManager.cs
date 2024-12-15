@@ -23,8 +23,6 @@ namespace InternalModBot
 
         private Action _actionOnModsPanelClose = null;
 
-        private static ModInfo _theModUserGoingToDelete;
-
         private void Start()
         {
             Vector3 pauseScreenButtonOffset = new Vector3(0f, 1.2f, 0f);
@@ -84,7 +82,7 @@ namespace InternalModBot
 
             ReloadModItems();
 
-            Transform settingsButtonHolder = TransformUtils.FindChildRecursive(GameUIRoot.Instance.SettingsMenu.RootContainer.transform, "TabHolder");
+            /*Transform settingsButtonHolder = TransformUtils.FindChildRecursive(GameUIRoot.Instance.SettingsMenu.RootContainer.transform, "TabHolder");
 
             int buttonCount = settingsButtonHolder.childCount;
 
@@ -115,16 +113,14 @@ namespace InternalModBot
             SettingsMenuTabButton tabButton = spawnedButtonContainer.GetComponentInChildren<SettingsMenuTabButton>();
             buttons[buttons.Length - 1] = tabButton;
             GameUIRoot.Instance.SettingsMenu.TabButtons = buttons;
-            /*GameUIRoot.Instance.SettingsMenu.TabNavigationSetter.TabButtons = null;
-            GameUIRoot.Instance.SettingsMenu.TabNavigationSetter.InitializeSetter();*/
+            GameUIRoot.Instance.SettingsMenu.TabNavigationSetter.TabButtons = null;
+            GameUIRoot.Instance.SettingsMenu.TabNavigationSetter.InitializeSetter();
 
             GameObject settingsPage = Instantiate(InternalAssetBundleReferences.ModBot.GetObject("ModBotSettings"), tabButton.ContentToShow.parent);
             tabButton.ContentToShow = settingsPage.transform;
-            ModBotSettingsManager.Init(settingsPage.GetComponent<ModdedObject>());
+            ModBotSettingsManager.Init(settingsPage.GetComponent<ModdedObject>());*/
 
             ModBotUIRoot.Instance.gameObject.AddComponent<ModBotUIRootNew>().Init();
-
-            _theModUserGoingToDelete = null;
         }
 
         /// <summary>
@@ -251,21 +247,20 @@ namespace InternalModBot
                 LocalizedTextField localizedTextField = enableOrDisableButton.transform.GetChild(0).GetComponent<LocalizedTextField>();
                 localizedTextField.LocalizationID = "mods_menu_enable_mod";
                 localizedTextField.tryLocalizeTextField();
-                localizedTextField.gameObject.SetActive(!mod.OwnerModInfo.ModIsAboutToDelete());
+                localizedTextField.gameObject.SetActive(true);
 
                 enableOrDisableButton.colors = new ColorBlock() { normalColor = Color.green * 1.2f, highlightedColor = Color.green, pressedColor = Color.green * 0.8f, colorMultiplier = 1 };
             }
-            enableOrDisableButton.interactable = !mod.OwnerModInfo.ModIsAboutToDelete();
+            enableOrDisableButton.interactable = true;
 
             Button BroadcastButton = modItemModdedObject.GetObject<Button>(6);
             BroadcastButton.onClick.AddListener(delegate { onBroadcastButtonClicked(mod.ModReference); });
             BroadcastButton.gameObject.SetActive(false);
 
             Button deleteModButton = modItemModdedObject.GetObject_Alt<Button>(7);
-            deleteModButton.onClick.AddListener(delegate { deleteMod(mod); });
-            deleteModButton.interactable = !mod.OwnerModInfo.ModIsAboutToDelete();
+            deleteModButton.gameObject.SetActive(false);
 
-            modItemModdedObject.GetObject_Alt<Transform>(8).gameObject.SetActive(mod.OwnerModInfo.ModIsAboutToDelete());
+            modItemModdedObject.GetObject_Alt<Transform>(8).gameObject.SetActive(true);
 
             modItemModdedObject.GetObject<Button>(3).onClick.AddListener(delegate { toggleIsModDisabled(mod); }); // Add disable button callback
             //modItemModdedObject.GetObject<Button>(4).GetComponentInChildren<Text>().gameObject.AddComponent<LocalizedTextField>().LocalizationID = "mods_menu_mod_options";
@@ -277,28 +272,6 @@ namespace InternalModBot
 
         private static void onBroadcastButtonClicked(Mod mod)
         {
-        }
-
-        private static void deleteMod(LoadedModInfo mod)
-        {
-            _theModUserGoingToDelete = mod.OwnerModInfo;
-            if (_theModUserGoingToDelete == null)
-            {
-                return;
-            }
-            new Generic2ButtonDialogue("Confirm mod deletion? - " + mod.OwnerModInfo.DisplayName, "Yes, delete", confirmDeletingMod, "Nevermind", null, Generic2ButtonDialogeUI.ModDeletionSizeDelta);
-        }
-
-        private static void confirmDeletingMod()
-        {
-            if (_theModUserGoingToDelete == null)
-            {
-                return;
-            }
-
-            _theModUserGoingToDelete.MarkModAboutToDelete();
-            _theModUserGoingToDelete.IsModEnabled = false;
-            ModsPanelManager.Instance.ReloadModItems();
         }
 
         private void Update()

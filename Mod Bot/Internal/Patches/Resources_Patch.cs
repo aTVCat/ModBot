@@ -8,7 +8,7 @@ namespace InternalModBot
     [HarmonyPatch]
     static class Resources_Load_Patch
     {
-        static MethodBase TargetMethod()
+        /*static MethodBase TargetMethod()
         {
             return typeof(Resources).GetMethods(BindingFlags.Public | BindingFlags.Static).Single((m) => m.Name == "Load" && m.ReturnType == typeof(UnityEngine.Object) && m.GetMethodBody() != null);
         }
@@ -28,7 +28,7 @@ namespace InternalModBot
             }
 
             return __result;
-        }
+        }*/
 
         /* Harmony REALLY does not like generic methods, I have given up on trying to make this work, it will continue being in Injector.exe
         [ExtraInjectionData(Namespace = "UnityEngine", HasGenericParameters = true, GenericParameterTypes = new Type[] { typeof(UnityEngine.Object) }, ArgumentTypes = new Type[] { typeof(string) })]
