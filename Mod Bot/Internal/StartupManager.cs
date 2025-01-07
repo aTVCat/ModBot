@@ -57,8 +57,6 @@ namespace InternalModBot
         static void initializeUI()
         {
             GameObject spawnedUI = InternalAssetBundleReferences.ModBot.InstantiateObject("Canvas");
-            RectTransform rectTransform = spawnedUI.transform as RectTransform;
-            rectTransform.localScale = Vector3.one * 0.005f;
 
             ModdedObject spawedUIModdedObject = spawnedUI.GetComponent<ModdedObject>();
             ModBotUIRoot modBotUIRoot = spawnedUI.AddComponent<ModBotUIRoot>();

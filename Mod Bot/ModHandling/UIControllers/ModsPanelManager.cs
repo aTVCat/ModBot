@@ -27,6 +27,10 @@ namespace InternalModBot
 
         private MainMenuUI _vrMainMenu;
 
+        private VRPauseMenu _vrPauseMenu;
+
+        private bool _isShowingModsMenuOverPauseMenu;
+
         private void Start()
         {
             // maybe delete this later since modbot will not port the game to pc
@@ -45,6 +49,10 @@ namespace InternalModBot
                     }
                 }, 1f);
             }
+
+            _vrPauseMenu = FindObjectOfType<VRPauseMenu>();
+            if (_vrPauseMenu)
+                PatchVRPauseMenu(_vrPauseMenu);
 
             ModBotUIRoot.Instance.ModsWindow.WindowObject.SetActive(false);
 
@@ -77,6 +85,16 @@ namespace InternalModBot
             RectTransform modsButton = Instantiate(settingsButton, topArea);
             Button button = modsButton.GetComponent<Button>();
             button.onClick = new Button.ButtonClickedEvent();
+            button.onClick.AddListener(delegate
+            {
+                if (_isShowingModsMenuOverPauseMenu && isModsMenuActive())
+                {
+                    closeModsMenu();
+                }
+
+                _isShowingModsMenuOverPauseMenu = false;
+                ModBotUIRoot.Instance.SetTransform(mainMenuUI.transform.position + (mainMenuUI.transform.forward * -0.6f) + (mainMenuUI.transform.up * 0.2f), mainMenuUI.transform.eulerAngles, 0.004f);
+            });
             button.onClick.AddListener(openModsMenu);
 
             TMPro.TextMeshProUGUI label = modsButton.GetComponentInChildren<TMPro.TextMeshProUGUI>();
@@ -85,8 +103,41 @@ namespace InternalModBot
             // lower other buttons
             settingsButton.anchoredPosition += Vector2.down * 35f;
             creditsButton.anchoredPosition += Vector2.down * 35f;
+        }
 
-            ModBotUIRoot.Instance.SetWorldPosition(mainMenuUI.transform.position + (mainMenuUI.transform.forward * -0.6f) + (mainMenuUI.transform.up * 0.5f));
+        internal void PatchVRPauseMenu(VRPauseMenu pauseMenu)
+        {
+            RectTransform settingsButton = TransformUtils.FindChildRecursive(pauseMenu.transform, "SettingsButton") as RectTransform;
+            RectTransform topArea = settingsButton.parent as RectTransform;
+
+            // adjust pause menu height to fit mods button
+            RectTransform mainMenuRoot = topArea.parent as RectTransform;
+            Vector2 mainMenuRootSizeDelta = mainMenuRoot.sizeDelta;
+            mainMenuRootSizeDelta.y = 210f;
+            mainMenuRoot.sizeDelta = mainMenuRootSizeDelta;
+
+            RectTransform modsButton = Instantiate(settingsButton, topArea);
+            Button button = modsButton.GetComponent<Button>();
+            button.onClick = new Button.ButtonClickedEvent();
+            button.onClick.AddListener(delegate
+            {
+                if(!_isShowingModsMenuOverPauseMenu && isModsMenuActive())
+                {
+                    closeModsMenu();
+                }
+
+                _isShowingModsMenuOverPauseMenu = true;
+                ModBotUIRoot.Instance.SetTransform(pauseMenu.transform.position + (pauseMenu.transform.forward * 1.6f) + (pauseMenu.transform.up * 2.1f), pauseMenu.transform.eulerAngles, 0.003f);
+            });
+            button.onClick.AddListener(openModsMenu);
+
+            TMPro.TextMeshProUGUI label = modsButton.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+            label.text = "Mods";
+        }
+
+        private bool isModsMenuActive()
+        {
+            return ModBotUIRoot.Instance.ModsWindow.WindowObject.activeSelf;
         }
 
         /// <summary>
@@ -101,9 +152,18 @@ namespace InternalModBot
 
         private void openModsMenu()
         {
-            //GameUIRoot.Instance.SetEscMenuDisabled(true);
+            if (_isShowingModsMenuOverPauseMenu)
+            {
+                if (_vrPauseMenu && _vrPauseMenu.IsVisible())
+                    _vrPauseMenu.MainMenu.SetActive(false);
+            }
+            else
+            {
+                if(_vrMainMenu)
+                _vrMainMenu._root.gameObject.SetActive(false);
+            }
 
-            _vrMainMenu._root.gameObject.SetActive(false);
+            //GameUIRoot.Instance.SetEscMenuDisabled(true);
 
             ModBotUIRoot.Instance.ModsWindow.WindowObject.SetActive(true);
             ModBotUIRoot.Instance.ModsWindow.CreateModButton.gameObject.SetActive(ModCreationWindow.CanBeShown);
@@ -112,7 +172,16 @@ namespace InternalModBot
 
         private void closeModsMenu()
         {
-            _vrMainMenu._root.gameObject.SetActive(true);
+            if (_isShowingModsMenuOverPauseMenu)
+            {
+                if (_vrPauseMenu && _vrPauseMenu.IsVisible())
+                    _vrPauseMenu.MainMenu.SetActive(true);
+            }
+            else
+            {
+                if (_vrMainMenu)
+                    _vrMainMenu._root.gameObject.SetActive(true);
+            }
 
             ModBotUIRoot.Instance.ModsWindow.WindowObject.SetActive(false);
             //GameUIRoot.Instance.SetEscMenuDisabled(false);

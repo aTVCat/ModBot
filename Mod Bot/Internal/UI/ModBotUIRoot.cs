@@ -83,9 +83,11 @@ namespace InternalModBot
             ModDownloadPage.Init(moddedObject.GetObject<ModdedObject>(10));
         }
 
-        public void SetWorldPosition(Vector3 position)
+        public void SetTransform(Vector3 worldPosition, Vector3 eulerAngles, float scale)
         {
-            base.transform.position = position;
+            base.transform.position = worldPosition;
+            base.transform.eulerAngles = eulerAngles;
+            base.transform.localScale = Vector3.one * scale;
         }
     }
 
