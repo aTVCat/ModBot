@@ -31,7 +31,7 @@ public class SaveAssetBundles : EditorWindow {
 		AssetDatabase.Refresh();
 		Debug.Log("Done Building asset bundles!");
 
-		string outputPath = new DirectoryInfo(Application.dataPath).Parent.Parent.FullName + "/" + "built version/Clone Drone in the Danger Zone_Data";
+		string outputPath = new DirectoryInfo(Application.dataPath).Parent.Parent.FullName + "/" + "built version/Clone Drone in the Hyperdome_Data";
 
 		Debug.Log("Copying files...");
 		for (int i = 0; i < AssetBundlesToExport.Length; i++)

@@ -63,6 +63,7 @@
     <Compile Include="Internal\Patches\AnalyticsManager_Patch.cs" />
     <Compile Include="Internal\Patches\EscMenu_Patch.cs" />
     <Compile Include="Internal\Patches\GameModeManager_Patch.cs" />
+    <Compile Include="Internal\Patches\MainMenuUI_Patch.cs" />
     <Compile Include="Internal\Patches\VRPlayerCharacter_Patch.cs" />
     <Compile Include="Internal\Patches\ErrorWindow_Patch.cs" />
     <Compile Include="Internal\Patches\LevelEditorUI_Patch.cs" />
@@ -217,6 +218,10 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Unity.TextMeshPro, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Clone Drone in the Hyperdome\Clone Drone in the Hyperdome_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\UsedDlls\UnityEngine.dll</HintPath>
@@ -313,7 +318,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>set "managed=built version\Clone Drone in the Danger Zone_Data\Managed\"
+    <PostBuildEvent>set "managed=built version\Clone Drone in the Hyperdome_Data\Managed\"
 set "modlibraryxml=$(TargetName).xml"
 
 copy /Y "$(TargetPath)" "$(SolutionDir)%25managed%25$(TargetFileName)"

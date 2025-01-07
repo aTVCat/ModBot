@@ -35,7 +35,7 @@ namespace InternalModBot
 
             try // If an exception is thrown here, the crash screen wont appear, so we have to implement our own
             {
-                initilizeUI(); // Initialize all custom UI
+                initializeUI(); // Initialize all custom UI
 
                 ModsManager.Instance.Initialize(); // Loads all mods in the mods folder
             }
@@ -54,9 +54,11 @@ namespace InternalModBot
             debug.Log("Initialized Mod-Bot in " + stopwatch.Elapsed.TotalSeconds + " seconds");
         }
 
-        static void initilizeUI()
+        static void initializeUI()
         {
             GameObject spawnedUI = InternalAssetBundleReferences.ModBot.InstantiateObject("Canvas");
+            RectTransform rectTransform = spawnedUI.transform as RectTransform;
+            rectTransform.localScale = Vector3.one * 0.005f;
 
             ModdedObject spawedUIModdedObject = spawnedUI.GetComponent<ModdedObject>();
             ModBotUIRoot modBotUIRoot = spawnedUI.AddComponent<ModBotUIRoot>();

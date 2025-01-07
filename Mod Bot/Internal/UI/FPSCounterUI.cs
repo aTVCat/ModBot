@@ -10,7 +10,7 @@ namespace InternalModBot
     internal class FPSCounterUI : MonoBehaviour
     {
         public const bool SHOWMAXFPS = false; // maybe implement a setting
-        public const bool SHOWFPSONSTART = true;
+        public const bool SHOWFPSONSTART = false;
 
         Text _fpsCounter;
         float _timeToRefresh;

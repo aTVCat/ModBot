@@ -82,6 +82,11 @@ namespace InternalModBot
             ModDownloadPage = gameObject.AddComponent<ModDownloadPage>();
             ModDownloadPage.Init(moddedObject.GetObject<ModdedObject>(10));
         }
+
+        public void SetWorldPosition(Vector3 position)
+        {
+            base.transform.position = position;
+        }
     }
 
 }
