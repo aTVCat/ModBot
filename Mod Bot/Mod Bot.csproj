@@ -100,7 +100,6 @@
     <Compile Include="Internal\DebugLineDrawing.cs" />
     <Compile Include="Injector.cs" />
     <Compile Include="Internal\InternalUtils.cs" />
-    <Compile Include="Internal\LevelEditor\ModBotCustomLevelEditorManager.cs" />
     <Compile Include="Internal\LevelEditor\Scriptable.cs" />
     <Compile Include="Internal\LineInfo.cs" />
     <Compile Include="Internal\ModBotHarmonyInjectionManager.cs" />

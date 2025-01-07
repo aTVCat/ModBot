@@ -1,7 +1,5 @@
-﻿using InternalModBot.LevelEditor;
-using ModLibrary;
+﻿using ModLibrary;
 using System;
-using System.Collections;
 using System.Diagnostics;
 using System.IO;
 using UnityEngine;
@@ -21,14 +19,6 @@ namespace InternalModBot
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-
-            // this is temp
-            string str = SceneTransitionManager.Instance.VRLoadingScenePrefab.name;
-            foreach(GameObject gameObject in SceneManager.GetActiveScene().GetRootGameObjects())
-            {
-                if (gameObject.name.Contains(str))
-                    gameObject.SetActive(false);
-            }
 
             ModBotHarmonyInjectionManager.TryInject();
 

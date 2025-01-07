@@ -26,6 +26,23 @@ namespace InternalModBot
 
         private void Start()
         {
+            // maybe delete this later since modbot will not port the game to pc
+            if (DelegateScheduler.Instance)
+            {
+                DelegateScheduler.Instance.Schedule(delegate
+                {
+                    if (GameModeManager.IsOnTitleScreen() || GameModeManager.IsInLevelEditor())
+                    {
+                        DestroyOnSceneLoaded[] objs = FindObjectsOfType<DestroyOnSceneLoaded>();
+                        foreach (var obj in objs)
+                        {
+                            if (obj.name.StartsWith("VRLoadingScene"))
+                                Destroy(obj.gameObject);
+                        }
+                    }
+                }, 1f);
+            }
+
             if (GameUIRoot.Instance)
             {
                 Vector3 pauseScreenButtonOffset = new Vector3(0f, 1.2f, 0f);

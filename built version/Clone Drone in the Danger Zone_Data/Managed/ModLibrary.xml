@@ -1743,53 +1743,6 @@
             <param name="postfixSource">The source of the postfix injection</param>
             <param name="mod">The owner of this injection</param>
         </member>
-        <member name="T:ModLibrary.LevelEditorObjectAdder">
-            <summary>
-            Can be used to add your own custom things to the editor!
-            </summary>
-        </member>
-        <member name="M:ModLibrary.LevelEditorObjectAdder.AddObject(System.String,System.String,UnityEngine.Transform,UnityEngine.Texture2D)">
-            <summary>
-            Adds an object to the editor
-            </summary>
-            <param name="folderName">The name of the folder you want to add item to, if the folder doesnt already exist a new one will be created.</param>
-            <param name="itemName">The name of the new item in the assets list.</param>
-            <param name="transform">The prefab you want to add. It <b>must</b> be a prefab.</param>
-            <param name="image">The texture to display in the assets list.</param>
-        </member>
-        <member name="M:ModLibrary.LevelEditorObjectAdder.GetPreviewTexture(System.String)">
-            <summary>
-            Get the preview image
-            </summary>
-            <param name="path"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ModLibrary.LevelEditorObjectAdder.GetGameObject(System.String)">
-            <summary>
-            Get the preview image
-            </summary>
-            <param name="path"></param>
-            <returns>Returns GameObject with its components</returns>
-        </member>
-        <member name="M:ModLibrary.LevelEditorObjectAdder.HasLoadedTransform(System.String)">
-            <summary>
-            </summary>
-            <param name="path"></param>
-            <returns>Returns <b>true</b> if object Transform was found, otherwise <b>false</b></returns>
-        </member>
-        <member name="M:ModLibrary.LevelEditorObjectAdder.HasLoadedTexture(System.String)">
-            <summary>
-            </summary>
-            <param name="path"></param>
-            <returns>Returns <b>true</b> if Texture2D was found, otherwise <b>false</b></returns>
-        </member>
-        <member name="M:ModLibrary.LevelEditorObjectAdder.IsPrefab(UnityEngine.Transform)">
-            <summary>
-            Probably not the best solution for chekcing if the transform is a prefab
-            </summary>
-            <param name="transform"></param>
-            <returns>Returns <b>true</b> if Transform is not in any visible scenes, otherwise <b>false</b></returns>
-        </member>
         <member name="T:ModLibrary.MainModClassAttribute">
             <summary>
             Put this on the mod class in your mod. the target class will act as the "Main" call of your mod
@@ -4245,16 +4198,6 @@
             </summary>
             <param name="fullPath"></param>
             <returns></returns>
-        </member>
-        <member name="T:InternalModBot.LevelEditor.ModBotCustomLevelEditorManager">
-            <summary>
-            Used by mod-bot to handle custom leveleditor stuff
-            </summary>
-        </member>
-        <member name="M:InternalModBot.LevelEditor.ModBotCustomLevelEditorManager.Init">
-            <summary>
-            Sets up the all custom leveleditor things
-            </summary>
         </member>
         <member name="T:InternalModBot.LineInfo">
             <summary>
