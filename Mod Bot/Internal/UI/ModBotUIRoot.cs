@@ -34,10 +34,6 @@ namespace InternalModBot
         /// </summary>
         public ModOptionsWindow ModOptionsWindow;
         /// <summary>
-        /// The download page UI
-        /// </summary>
-        public ModDownloadPage ModDownloadPage;
-        /// <summary>
         /// The root canvas
         /// </summary>
         public Canvas Root;
@@ -67,9 +63,6 @@ namespace InternalModBot
 
             ModOptionsWindow = gameObject.AddComponent<ModOptionsWindow>();
             ModOptionsWindow.Init(moddedObject.GetObject<ModdedObject>(9));
-
-            ModDownloadPage = gameObject.AddComponent<ModDownloadPage>();
-            ModDownloadPage.Init(moddedObject.GetObject<ModdedObject>(10));
         }
 
         public void SetTransform(Vector3 worldPosition, Vector3 eulerAngles, float scale)

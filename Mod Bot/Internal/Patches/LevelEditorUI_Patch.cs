@@ -41,7 +41,6 @@ namespace InternalModBot
             return ui.Generic2ButtonDialogeUI.UIRoot.activeInHierarchy ||
                 ui.ModBotSignInUI.WindowObject.activeInHierarchy ||
                 ModBotUIRootNew.DownloadWindow.gameObject.activeInHierarchy ||
-                ui.ModDownloadPage.WindowObject.activeInHierarchy ||
                 ui.ModOptionsWindow.WindowObject.activeInHierarchy ||
                 ui.ModsWindow.WindowObject.activeInHierarchy;
         }

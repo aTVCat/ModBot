@@ -4026,6 +4026,16 @@
             <param name="onFinishDownload"></param>
             <param name="onGotError"></param>
         </member>
+        <member name="T:InternalModBot.ModsHolder">
+            <summary>
+            Used when deserilizing data from the site
+            </summary>
+        </member>
+        <member name="F:InternalModBot.ModsHolder.Mods">
+            <summary>
+            A list of all the mods downloaded.
+            </summary>
+        </member>
         <member name="T:InternalModBot.InjectionTargetAttribute">
             <summary>
             Base attribute type for 0Harmony patch targets
@@ -5072,11 +5082,6 @@
             The mod options window UI
             </summary>
         </member>
-        <member name="F:InternalModBot.ModBotUIRoot.ModDownloadPage">
-            <summary>
-            The download page UI
-            </summary>
-        </member>
         <member name="F:InternalModBot.ModBotUIRoot.Root">
             <summary>
             The root canvas
@@ -5120,32 +5125,6 @@
             <summary>
             Sets up Mod-Mot in general, called on game start
             </summary>
-        </member>
-        <member name="T:InternalModBot.ModDownloadPage">
-            <summary>
-            The mod download page UI
-            </summary>
-        </member>
-        <member name="F:InternalModBot.ModDownloadPage.Content">
-            <summary>
-            The content holder of the download page
-            </summary>
-        </member>
-        <member name="F:InternalModBot.ModDownloadPage.XButton">
-            <summary>
-            The close button of the window
-            </summary>
-        </member>
-        <member name="F:InternalModBot.ModDownloadPage.WindowObject">
-            <summary>
-            The base object of the page
-            </summary>
-        </member>
-        <member name="M:InternalModBot.ModDownloadPage.Init(ModdedObject)">
-            <summary>
-            Sets up the mod download page from a moddedobject
-            </summary>
-            <param name="moddedObject"></param>
         </member>
         <member name="T:InternalModBot.ModOptionsWindow">
             <summary>
@@ -5307,27 +5286,6 @@
             </summary>
             <param name="mod"></param>
             <param name="modInfo"></param>
-        </member>
-        <member name="T:InternalModBot.ModDownloadInfoItem">
-            <summary>
-            Controlls a item in the get more mods menu
-            </summary>
-        </member>
-        <member name="M:InternalModBot.ModDownloadInfoItem.Init(ModLibrary.ModInfo)">
-            <summary>
-            Initilizes the <see cref="T:InternalModBot.ModDownloadInfoItem"/>
-            </summary>
-            <param name="holder"></param>
-        </member>
-        <member name="T:InternalModBot.ModsHolder">
-            <summary>
-            Used when deserilizing data from the site
-            </summary>
-        </member>
-        <member name="F:InternalModBot.ModsHolder.Mods">
-            <summary>
-            A list of all the mods downloaded.
-            </summary>
         </member>
         <member name="T:InternalModBot.ModsManager">
             <summary>
@@ -5654,7 +5612,7 @@
         </member>
         <member name="M:InternalModBot.ModsPanelManager.ReloadModItems">
             <summary>
-            Refereshes what mods should be displayed in the mods menu
+            Refreshes what mods should be displayed in the mods menu
             </summary>
         </member>
         <member name="T:InternalModBot.StringAndByteArrayConverterExtensions">

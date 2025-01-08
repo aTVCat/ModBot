@@ -40,6 +40,7 @@ namespace InternalModBot
             CloseButton = moddedObject.GetObject<Button>(1);
             GetMoreModsButton = moddedObject.GetObject<Button>(2);
             OpenModsFolderButton = moddedObject.GetObject<Button>(3);
+            OpenModsFolderButton.gameObject.SetActive(!GameVersionManager.IsRunningOnVRHeadset());
             WindowObject = moddedObject.gameObject;
         }
     }
