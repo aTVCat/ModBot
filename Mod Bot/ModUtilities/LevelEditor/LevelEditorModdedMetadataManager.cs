@@ -118,11 +118,11 @@ namespace ModLibrary
                 Dictionary<string, string> metadataForMod;
                 try
                 {
-                    metadataForMod = JsonConvert.DeserializeObject<Dictionary<string, string>>(serializedDictionary);
+                    metadataForMod = JsonTools.DeserializeCustomSettings<Dictionary<string, string>>(serializedDictionary, null);
                 }
                 catch (JsonException jsonError)
                 {
-                    throw new Exception($"JsonConvert.DeserializeObject failed with argument \"{serializedDictionary}\", {nameof(levelData)}: [{levelData.GeneratedUniqueID}], {nameof(owner)}: {owner.ModInfo.MainDLLFileName}", jsonError);
+                    throw new Exception($"JsonTools.DeserializeCustomSettings failed with argument \"{serializedDictionary}\", {nameof(levelData)}: [{levelData.GeneratedUniqueID}], {nameof(owner)}: {owner.ModInfo.MainDLLFileName}", jsonError);
                 }
 
                 return metadataForMod;
@@ -167,7 +167,7 @@ namespace ModLibrary
             Dictionary<string, string> metadataForMod;
             if (currentLevelData.ModdedMetadata.TryGetValue(modID, out string serializedDictionary))
             {
-                metadataForMod = JsonConvert.DeserializeObject<Dictionary<string, string>>(serializedDictionary);
+                metadataForMod = JsonTools.DeserializeCustomSettings<Dictionary<string, string>>(serializedDictionary, null);
             }
             else
             {
@@ -176,7 +176,7 @@ namespace ModLibrary
 
             metadataForMod[key] = value;
 
-            currentLevelData.ModdedMetadata[modID] = JsonConvert.SerializeObject(metadataForMod);
+            currentLevelData.ModdedMetadata[modID] = JsonTools.Serialize(metadataForMod);
 
             GlobalEventManager.Instance.Dispatch(GlobalEvents.LevelEditorLevelChanged);
 
@@ -286,7 +286,7 @@ namespace ModLibrary
                 Dictionary<string, string> metadataForMod;
                 try
                 {
-                    metadataForMod = JsonConvert.DeserializeObject<Dictionary<string, string>>(serializedDictionary);
+                    metadataForMod = JsonTools.DeserializeCustomSettings<Dictionary<string, string>>(serializedDictionary, null);
                 }
                 catch (JsonException jsonError)
                 {

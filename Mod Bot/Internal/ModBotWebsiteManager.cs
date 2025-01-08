@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ModLibrary;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using UnityEngine.Networking;
@@ -31,7 +32,7 @@ namespace InternalModBot
                     yield break;
                 }
 
-                ModsHolder? modsHolder = JsonConvert.DeserializeObject<ModsHolder>(webRequest.downloadHandler.text);
+                ModsHolder? modsHolder = JsonTools.DeserializeCustomSettings<ModsHolder>(webRequest.downloadHandler.text, null);
                 downloadedData(modsHolder);
             }
             yield break;

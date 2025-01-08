@@ -258,6 +258,7 @@ namespace InternalModBot
                 modInfo = null;
                 return false;
             }
+
             string modInfoFilePath = folderPath + "/" + MOD_INFO_FILE_NAME;
             if (!File.Exists(modInfoFilePath))
             {
@@ -266,10 +267,10 @@ namespace InternalModBot
                 modInfo = null;
                 return true;
             }
-            string modInfoJson = File.ReadAllText(modInfoFilePath);
+
             try
             {
-                modInfo = JsonConvert.DeserializeObject<ModInfo>(modInfoJson);
+                modInfo = JsonTools.DeserializeFile<ModInfo>(modInfoFilePath);
             }
             catch (JsonException e)
             {

@@ -29,9 +29,7 @@ namespace InternalModBot
 
         static void populateSettingDictionary()
         {
-            string json = File.ReadAllText(_settingsFilePath);
-
-            object deserializedObject = JsonConvert.DeserializeObject(json);
+            object deserializedObject = JsonTools.DeserializeFileCustomSettings(_settingsFilePath, null);
 
             if (deserializedObject is Dictionary<string, object> dictionary)
             {
@@ -122,7 +120,7 @@ namespace InternalModBot
 
         internal static void SaveToFile()
         {
-            File.WriteAllText(_settingsFilePath, JsonConvert.SerializeObject(_savedSettingsDictionary));
+            JsonTools.SerializeFile(_settingsFilePath, _savedSettingsDictionary);
         }
 
         internal static void SetSetting(Mod owner, string providedSaveID, object value, bool writeToFile)

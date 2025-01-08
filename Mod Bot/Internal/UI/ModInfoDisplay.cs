@@ -205,10 +205,10 @@ namespace InternalModBot
             {
                 yield return webRequest.SendWebRequest();
 
-                if (webRequest.isNetworkError || webRequest.isHttpError)
+                if (webRequest.result != UnityWebRequest.Result.Success)
                     yield break;
 
-                m_SpecialData = JsonConvert.DeserializeObject<Dictionary<string, JToken>>(webRequest.downloadHandler.text);
+                m_SpecialData = JsonTools.DeserializeCustomSettings<Dictionary<string, JToken>>(webRequest.downloadHandler.text, null);
                 refreshSpecialData();
                 m_LikeButton.interactable = CanInteractWithSpecialData;
 

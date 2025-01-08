@@ -192,14 +192,12 @@ namespace InternalModBot
                 }
                 _modInfoDownloadWebRequest = null;
 
-                ModsHolder? modsHolder = JsonConvert.DeserializeObject<ModsHolder>(webRequest.downloadHandler.text);
+                ModsHolder? modsHolder = JsonTools.Deserialize<ModsHolder>(webRequest.downloadHandler.text);
                 if (onGotError != null) onFinishDownload(modsHolder);
 
                 webRequest.Dispose();
             }
         }
-
-
 
         internal class ModDownloadInfo
         {

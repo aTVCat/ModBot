@@ -30,8 +30,7 @@ namespace ModLibrary
 
             _savedValues[localPath][key] = value;
 
-            string json = JsonConvert.SerializeObject(_savedValues[localPath]);
-            File.WriteAllText(modPathFullPath + PRIMITIVES_SAVE_DATA_FILE_NAME, json);
+            JsonTools.SerializeFile(modPathFullPath + PRIMITIVES_SAVE_DATA_FILE_NAME, _savedValues[localPath]);
         }
         static object loadData(string key, Type type)
         {
@@ -402,8 +401,7 @@ namespace ModLibrary
 
             string fullFilePath = saveDataFolderPath + key + ".json";
 
-            string json = JsonConvert.SerializeObject(value);
-            File.WriteAllText(fullFilePath, json);
+            JsonTools.SerializeFileCustomSettings(fullFilePath, value, null);
         }
 
         /// <summary>
@@ -422,8 +420,7 @@ namespace ModLibrary
             {
                 throw new Exception("Could not find any custom types with the key \"" + key + "\"");
             }
-            string json = File.ReadAllText(fullFilePath);
-            return JsonConvert.DeserializeObject<Type>(json);
+            return JsonTools.DeserializeFileCustomSettings<Type>(fullFilePath, null);
         }
 
         static void createFoldersIfNeeded(string localPath)
@@ -444,8 +441,7 @@ namespace ModLibrary
             if (!File.Exists(path))
                 return;
 
-            string json = File.ReadAllText(path);
-            _savedValues[localPath] = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+            _savedValues[localPath] = JsonTools.DeserializeFileCustomSettings<Dictionary<string, object>>(path, null);
         }
     }
 }

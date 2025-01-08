@@ -1,8 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using UnityEngine;
 
 namespace ModLibrary
@@ -68,7 +65,7 @@ namespace ModLibrary
         {
             if (levelDescription is null)
                 throw new ArgumentNullException(nameof(levelDescription));
-            
+
             LevelEditorLevelData levelEditorLevelData = null;
             if (!string.IsNullOrEmpty(levelDescription.PathUnderResourcesLevelFolder))
             {
@@ -81,11 +78,11 @@ namespace ModLibrary
                     return null;
                 }
 
-                levelEditorLevelData = JsonConvert.DeserializeObject<LevelEditorLevelData>((levelJsonObject as TextAsset).text, DataRepository.Instance.GetSettings());
+                levelEditorLevelData = JsonTools.Deserialize<LevelEditorLevelData>((levelJsonObject as TextAsset).text);
             }
             else if (!string.IsNullOrEmpty(levelDescription.JSONPathOnDisk))
             {
-                levelEditorLevelData = LevelManager.Instance.LoadLevelEditorLevelData(levelDescription.JSONPathOnDisk);
+                levelEditorLevelData = JsonTools.DeserializeFile<LevelEditorLevelData>(levelDescription.JSONPathOnDisk);
             }
             return levelEditorLevelData;
         }

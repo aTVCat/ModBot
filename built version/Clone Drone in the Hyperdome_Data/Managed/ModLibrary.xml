@@ -1363,6 +1363,152 @@
             Compare both the <see cref="F:HarmonyLib.CodeInstruction.opcode"/> and <see cref="F:HarmonyLib.CodeInstruction.operand"/> fields from both instances
             </summary>
         </member>
+        <member name="T:ModLibrary.JsonTools">
+            <summary>
+            Tools to efficiently serialize/deserialize json objects
+            </summary>
+        </member>
+        <member name="M:ModLibrary.JsonTools.Serialize(System.Object)">
+            <summary>
+            Serializes an object using <see cref="M:DataRepository.GetSettings"/>
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ModLibrary.JsonTools.Deserialize``1(System.String)">
+            <summary>
+            Deserializes an object of specified type using <see cref="M:DataRepository.GetSettings"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="string"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ModLibrary.JsonTools.Deserialize(System.String)">
+            <summary>
+            Deserializes an object using <see cref="M:DataRepository.GetSettings"/>
+            </summary>
+            <param name="string"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ModLibrary.JsonTools.SerializeFile(System.String,System.Object)">
+            <summary>
+            Serializes and writes an object to file using <see cref="M:DataRepository.GetSettings"/>
+            </summary>
+            <param name="path"></param>
+            <param name="obj"></param>
+        </member>
+        <member name="M:ModLibrary.JsonTools.DeserializeFile``1(System.String)">
+            <summary>
+            Reads and deserializes an object of specified type from file using <see cref="M:DataRepository.GetSettings"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ModLibrary.JsonTools.DeserializeFile(System.String)">
+            <summary>
+            Reads and deserializes an object from file using <see cref="M:DataRepository.GetSettings"/>
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ModLibrary.JsonTools.SerializeStream(System.IO.Stream,System.Object)">
+            <summary>
+            Serializes and writes to stream an object using <see cref="M:DataRepository.GetSettings"/>
+            </summary>
+            <param name="stream"></param>
+            <param name="obj"></param>
+        </member>
+        <member name="M:ModLibrary.JsonTools.DeserializeStream``1(System.IO.Stream)">
+            <summary>
+            Reads and deserializes an object of specified type from stream using <see cref="M:DataRepository.GetSettings"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="stream"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ModLibrary.JsonTools.DeserializeStream(System.IO.Stream)">
+            <summary>
+            Reads and deserializes an object from stream using <see cref="M:DataRepository.GetSettings"/>
+            </summary>
+            <param name="stream"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ModLibrary.JsonTools.SerializeCustomSettings(System.Object,Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Serializes an object using default settings
+            </summary>
+            <param name="obj"></param>
+            <param name="jsonSerializerSettings">Serializer settings. Leave this parameter null to use default settings</param>
+            <returns></returns>
+        </member>
+        <member name="M:ModLibrary.JsonTools.DeserializeCustomSettings``1(System.String,Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Deserializes an object of specified type using default settings
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="string"></param>
+            <param name="jsonSerializerSettings">Serializer settings. Leave this parameter null to use default settings</param>
+            <returns></returns>
+        </member>
+        <member name="M:ModLibrary.JsonTools.DeserializeCustomSettings(System.String,Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Deserializes an object using default settings
+            </summary>
+            <param name="string"></param>
+            <param name="jsonSerializerSettings">Serializer settings. Leave this parameter null to use default settings</param>
+            <returns></returns>
+        </member>
+        <member name="M:ModLibrary.JsonTools.SerializeFileCustomSettings(System.String,System.Object,Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Serializes and writes an object to file using default settings
+            </summary>
+            <param name="path"></param>
+            <param name="obj"></param>
+            <param name="jsonSerializerSettings">Serializer settings. Leave this parameter null to use default settings</param>
+        </member>
+        <member name="M:ModLibrary.JsonTools.DeserializeFileCustomSettings``1(System.String,Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Reads and deserializes an object of specified type from file using default settings
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="path"></param>
+            <param name="jsonSerializerSettings">Serializer settings. Leave this parameter null to use default settings</param>
+            <returns></returns>
+        </member>
+        <member name="M:ModLibrary.JsonTools.DeserializeFileCustomSettings(System.String,Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Reads and deserializes an object from file using default settings
+            </summary>
+            <param name="path"></param>
+            <param name="jsonSerializerSettings">Serializer settings. Leave this parameter null to use default settings</param>
+            <returns></returns>
+        </member>
+        <member name="M:ModLibrary.JsonTools.SerializeStreamCustomSettings(System.IO.Stream,System.Object,Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Serializes and writes to stream an object using default settings
+            </summary>
+            <param name="stream"></param>
+            <param name="obj"></param>
+            <param name="jsonSerializerSettings">Serializer settings. Leave this parameter null to use default settings</param>
+        </member>
+        <member name="M:ModLibrary.JsonTools.DeserializeStreamCustomSettings``1(System.IO.Stream,Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Reads and deserializes an object of specified type from stream using custom settings
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="stream"></param>
+            <param name="jsonSerializerSettings">Serializer settings. Leave this parameter null to use default settings</param>
+            <returns></returns>
+        </member>
+        <member name="M:ModLibrary.JsonTools.DeserializeStreamCustomSettings(System.IO.Stream,Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Reads and deserializes an object from stream using custom settings
+            </summary>
+            <param name="stream"></param>
+            <param name="jsonSerializerSettings">Serializer settings. Leave this parameter null to use default settings</param>
+            <returns></returns>
+        </member>
         <member name="T:ModLibrary.LevelEditorModdedMetadataManager">
             <summary>
             Handles reading/writing modded level metadata in the level editor
@@ -2395,6 +2541,15 @@
             <exception cref="T:System.ArgumentNullException">If <paramref name="moddedObject"/> is <see langword="null"/></exception>
             <exception cref="T:System.IndexOutOfRangeException">If the given index is outside the range of <see cref="F:ModdedObject.objects"/></exception>
             <exception cref="T:System.InvalidCastException">If the <see cref="T:UnityEngine.Object"/> at index <paramref name="index"/> is not of type <typeparamref name="T"/></exception>
+        </member>
+        <member name="M:ModLibrary.SingleMethodExtensions.GetObject_Alt``1(ModdedObject,System.Int32)">
+            <summary>
+            Alternative for <see cref="M:ModLibrary.SingleMethodExtensions.GetObject``1(ModdedObject,System.Int32)"/>. Searches for GameObject and finds the component
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="moddedObject"></param>
+            <param name="index"></param>
+            <returns></returns>
         </member>
         <member name="M:ModLibrary.SingleMethodExtensions.IsModEnabled(ModLibrary.Mod)">
             <summary>
