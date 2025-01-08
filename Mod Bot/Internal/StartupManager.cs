@@ -35,7 +35,6 @@ namespace InternalModBot
             modBotManagers.AddComponent<UpdateChecker>();                     // Checks for new Mod-Bot versions
             modBotManagers.AddComponent<ModsPanelManager>();                  // Adds the mods button in the main menu and pause screen
             modBotManagers.AddComponent<DebugLineDrawingManager>();           // Handles drawing lines on screen
-            modBotManagers.AddComponent<VersionLabelManager>();               // Handles custom version label stuff
 
             try // If an exception is thrown here, the crash screen wont appear, so we have to implement our own
             {

@@ -78,7 +78,6 @@
     <Compile Include="Internal\UI\ModDownloadWindow.cs" />
     <Compile Include="Internal\UI\ModInfoDisplay.cs" />
     <Compile Include="Internal\WaitForTask.cs" />
-    <Compile Include="Internal\ProgressBar.cs" />
     <Compile Include="ModHandling\ModDownloading\ModDownloadManager.cs" />
     <Compile Include="ModHandling\ModDownloading\ModsHolder.cs" />
     <Compile Include="ModHandling\ModInfo.cs" />
@@ -117,7 +116,6 @@
     <Compile Include="Internal\StartupManager.cs" />
     <Compile Include="Internal\UI\ModOptionsWindow.cs" />
     <Compile Include="Internal\UI\ModsWindow.cs" />
-    <Compile Include="Internal\VersionLabelManager.cs" />
     <Compile Include="Internal\UI\ConsoleUI.cs" />
     <Compile Include="Internal\CloseModOptionsWindowOnEscapeKey.cs" />
     <Compile Include="Internal\LoadedModInfo.cs" />

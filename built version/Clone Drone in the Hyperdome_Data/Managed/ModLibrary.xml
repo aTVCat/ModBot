@@ -5303,23 +5303,6 @@
             </summary>
             <param name="moddedObject"></param>
         </member>
-        <member name="T:InternalModBot.VersionLabelManager">
-            <summary>
-            Takes care of editing the version label
-            </summary>
-        </member>
-        <member name="F:InternalModBot.VersionLabelManager.VersionLabel">
-            <summary>
-            The version label itself
-            </summary>
-        </member>
-        <member name="M:InternalModBot.VersionLabelManager.SetLine(System.Int32,System.String)">
-            <summary>
-            Sets the provided line of the version label to the provided text, creating new lines if neccicary
-            </summary>
-            <param name="line"></param>
-            <param name="value"></param>
-        </member>
         <member name="T:InternalModBot.ConsoleUI">
             <summary>
             Used by Mod-Bot as the low level level of the debug console system

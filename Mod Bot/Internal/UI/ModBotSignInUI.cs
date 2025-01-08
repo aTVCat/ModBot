@@ -62,18 +62,12 @@ namespace InternalModBot
                         API.SetSessionID("");
 
                         File.Delete(_sessionIdFilePath);
-
-                        VersionLabelManager.Instance.SetLine(2, "Not signed in");
                         return;
                     }
 
                     onSignedIn();
 
                 });
-            }
-            else
-            {
-                VersionLabelManager.Instance.SetLine(2, "Not signed in");
             }
 
             _signUpButton.onClick.AddListener(new UnityAction(onSignUpButtonClicked));
@@ -124,7 +118,7 @@ namespace InternalModBot
 
         void signInFromGame()
         {
-            //todo: make signing in work again
+            //todo: make signing in work again?
             //API.SignInFromGame(_usernameField.text, _passwordField.text, MultiplayerLoginManager.Instance.GetLocalPlayFabID(), onSignInInfoReceived);
         }
 
@@ -186,7 +180,6 @@ namespace InternalModBot
                     }
 
                     debug.Log("logged in as " + username.Trim('\"'));
-                    VersionLabelManager.Instance.SetLine(2, "Signed in as: " + username);
                     CurrentUserName = username;
                 });
             });

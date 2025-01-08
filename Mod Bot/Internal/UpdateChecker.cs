@@ -13,19 +13,17 @@ namespace InternalModBot
     {
         void Start()
         {
-            if (!GameFlowManager.Instance.IsOnTitleScreen()) // If the user is currently playing any game mode, dont check for updates
-                return;
-
             StartCoroutine(checkVersion()); // Needs to be a Coroutine since the web requests are not asynchronous
         }
 
         IEnumerator checkVersion()
         {
+            yield return null;
+
+            if (!isOnTitleScreen()) // If the user is currently playing any game mode, dont check for updates
+                yield break;
+
             string installedModBotVersion = ModLibrary.Properties.Resources.ModBotVersion;
-
-            string modBotVersionLabel = ModBotLocalizationManager.FormatLocalizedStringFromID("modbotversion", installedModBotVersion);
-            VersionLabelManager.Instance.SetLine(1, modBotVersionLabel);
-
             if (installedModBotVersion.ToLower().Contains("beta"))
                 yield break;
 
@@ -33,7 +31,7 @@ namespace InternalModBot
             {
                 yield return modBotVersionRequest.SendWebRequest();
 
-                if (modBotVersionRequest.result != UnityWebRequest.Result.Success)
+                if (modBotVersionRequest.result != UnityWebRequest.Result.Success || !isOnTitleScreen())
                     yield break;
 
                 string newestModBotVersion = modBotVersionRequest.downloadHandler.text.Replace("\"", ""); // Latest ModBot version
@@ -54,52 +52,28 @@ namespace InternalModBot
             }
         }
 
+        bool isOnTitleScreen()
+        {
+            return GameModeManager.IsOnTitleScreen() || (GameFlowManager.Instance && GameFlowManager.Instance.IsOnTitleScreen()) || (LevelManager.Instance && LevelManager.Instance.GetCurrentLevelID() == "VR_MainMenu");
+        }
+
         bool isCloudVersionNewer(string installedVersion, string cloudVersion)
         {
-            string[] installedVersionStrings = installedVersion.Split('.');
-            string[] cloudVersionStrings = cloudVersion.Split('.');
-
-            int lengthOfLongest = Mathf.Max(installedVersionStrings.Length, cloudVersionStrings.Length);
-
-            int[] installedVersionNumbers = new int[lengthOfLongest];
-            int[] cloudVersionNumbers = new int[lengthOfLongest];
-
-            for (int i = 0; i < lengthOfLongest; i++)
+            if (Version.TryParse(cloudVersion, out Version cloud))
             {
-                if (i >= installedVersionStrings.Length)
+                if (Version.TryParse(installedVersion, out Version installed))
                 {
-                    installedVersionNumbers[i] = 0;
-                }
-                else if (int.TryParse(installedVersionStrings[i], out int number))
-                {
-                    installedVersionNumbers[i] = number;
+                    return cloud > installed;
                 }
                 else
                 {
                     throw new Exception("The installed version string was invalid");
                 }
-
-                if (i >= cloudVersionStrings.Length)
-                {
-                    cloudVersionNumbers[i] = 0;
-                }
-                else if (int.TryParse(cloudVersionStrings[i], out int number))
-                {
-                    cloudVersionNumbers[i] = number;
-                }
-                else
-                {
-                    throw new Exception("The cloud version string was invalid");
-                }
             }
-
-            for (int i = 0; i < lengthOfLongest; i++)
+            else
             {
-                if (installedVersionNumbers[i] > cloudVersionNumbers[i])
-                    return false;
+                throw new Exception("The cloud version string was invalid");
             }
-
-            return installedVersion != cloudVersion;
         }
 
         void onInstallButtonClicked()
