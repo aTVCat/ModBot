@@ -5209,29 +5209,6 @@
             </summary>
             <param name="moddedObject"></param>
         </member>
-        <member name="T:InternalModBot.RegisterShouldCursorBeEnabledDelegate">
-            <summary>
-            Used internally in mod-bot for telling if the cursor should be enabled or not
-            </summary>
-        </member>
-        <member name="M:InternalModBot.RegisterShouldCursorBeEnabledDelegate.Register(System.Func{System.Boolean})">
-            <summary>
-            Registers a new handler, if this handler returns <see langword="true"/> the cursor will be unlocked
-            </summary>
-            <param name="handler"></param>
-        </member>
-        <member name="M:InternalModBot.RegisterShouldCursorBeEnabledDelegate.UnRegister(System.Func{System.Boolean})">
-            <summary>
-            Removes a handler
-            </summary>
-            <param name="handler"></param>
-        </member>
-        <member name="M:InternalModBot.RegisterShouldCursorBeEnabledDelegate.ShouldMouseBeEnabled">
-            <summary>
-            Returns <see langword="true"/> if any of the registerd handlers return <see langword="true"/>
-            </summary>
-            <returns></returns>
-        </member>
         <member name="T:InternalModBot.StartupManager">
             <summary>
             Used to start Mod-Bot when the game starts

@@ -44,7 +44,6 @@ namespace ModLibrary
         public void PopulatePages()
         {
             //GameUIRoot.Instance.SetEscMenuDisabled(true);
-            RegisterShouldCursorBeEnabledDelegate.Register(shouldCurorBeEnabled);
             //GameUIRoot.Instance.RefreshCursorEnabled();
 
             TransformUtils.DestroyAllChildren(ModBotUIRoot.Instance.ModOptionsWindow.PageButtonsHolder.transform);
@@ -115,12 +114,8 @@ namespace ModLibrary
         /// </summary>
         public void CloseWindow()
         {
-            RegisterShouldCursorBeEnabledDelegate.UnRegister(shouldCurorBeEnabled);
-
             ModBotUIRoot.Instance.ModOptionsWindow.WindowObject.SetActive(false);
             _parentWindow.SetActive(true);
-
-            //GameUIRoot.Instance.RefreshCursorEnabled();
         }
 
         /// <summary>
@@ -128,17 +123,7 @@ namespace ModLibrary
         /// </summary>
         public void ForceCloseWindow()
         {
-            RegisterShouldCursorBeEnabledDelegate.UnRegister(shouldCurorBeEnabled);
-
             ModBotUIRoot.Instance.ModOptionsWindow.WindowObject.SetActive(false);
-            //GameUIRoot.Instance.SetEscMenuDisabled(false);
-
-            //GameUIRoot.Instance.RefreshCursorEnabled();
-        }
-
-        bool shouldCurorBeEnabled()
-        {
-            return true;
         }
 
         /// <summary>
@@ -479,5 +464,4 @@ namespace ModLibrary
                 rectTransform.anchoredPosition = CustomRect.Value.Position.Value;
         }
     }
-
 }
