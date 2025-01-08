@@ -15,5 +15,12 @@ namespace InternalModBot
                 __result = true;
             }
         }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(GameModeManager.IsDevModeEnabled))]
+        static void IsDevModeEnabled_Postfix(ref bool __result)
+        {
+            __result = true;
+        }
     }
 }

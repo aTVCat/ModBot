@@ -1,6 +1,7 @@
 ﻿using ModLibrary;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Org.BouncyCastle.Math.Raw;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using VR.UI;
 
@@ -24,11 +26,18 @@ namespace InternalModBot
         /// </summary>
         public readonly Color DisabledModColor = new Color(0.21f, 0.13f, 0f, 1f);
 
+        /// <summary>
+        /// The color used for enabled mods
+        /// </summary>
+        public readonly Color EnabledModColor = new Color(0.47f, 0.3f, 0.2f, 1f);
+
         private Action _actionOnModsPanelClose = null;
 
         private MainMenuUI _vrMainMenu;
 
         private VRPauseMenu _vrPauseMenu;
+
+        private NoVRHeadsetDetectedUIMenu _noVrHeadsetDetectedUIMenu;
 
         private bool _isShowingModsMenuOverPauseMenu;
 
@@ -36,23 +45,6 @@ namespace InternalModBot
 
         private void Start()
         {
-            // maybe delete this later since modbot will not port the game to pc
-            if (DelegateScheduler.Instance)
-            {
-                DelegateScheduler.Instance.Schedule(delegate
-                {
-                    if (GameModeManager.IsOnTitleScreen() || GameModeManager.IsInLevelEditor())
-                    {
-                        DestroyOnSceneLoaded[] objs = FindObjectsOfType<DestroyOnSceneLoaded>();
-                        foreach (var obj in objs)
-                        {
-                            if (obj.name.StartsWith("VRLoadingScene"))
-                                Destroy(obj.gameObject);
-                        }
-                    }
-                }, 1f);
-            }
-
             _vrPauseMenu = FindObjectOfType<VRPauseMenu>();
             if (_vrPauseMenu)
                 PatchVRPauseMenu(_vrPauseMenu);
@@ -63,9 +55,13 @@ namespace InternalModBot
             ModBotUIRoot.Instance.ModsWindow.GetMoreModsButton.onClick.AddListener(onGetMoreModsClicked); // Add more mods clicked callback
             ModBotUIRoot.Instance.ModsWindow.OpenModsFolderButton.onClick.AddListener(onModsFolderClicked); // Add mods folder clicked callback
 
-            ReloadModItems();
-
             ModBotUIRoot.Instance.gameObject.AddComponent<ModBotUIRootNew>().Init();
+
+            if (StartupManager.HasStartedWithNoHeadset())
+            {
+                NoVRHeadsetDetectedUIMenu noVRHeadsetDetectedUIMenu = FindObjectOfType<NoVRHeadsetDetectedUIMenu>();
+                PatchNoVRHeadsetDetectedUIMenu(noVRHeadsetDetectedUIMenu);
+            }
         }
 
         internal void PatchVRMainMenu(VR.UI.MainMenuUI mainMenuUI)
@@ -142,6 +138,34 @@ namespace InternalModBot
             label.text = "Mods";
         }
 
+        public void PatchNoVRHeadsetDetectedUIMenu(NoVRHeadsetDetectedUIMenu noHeadsetDetectedUIMenu)
+        {
+            _noVrHeadsetDetectedUIMenu = noHeadsetDetectedUIMenu;
+
+            RectTransform button = TransformUtils.FindChildRecursive(noHeadsetDetectedUIMenu.transform, "Button") as RectTransform;
+
+            RectTransform modsButtonTransform = Instantiate(button, button.parent);
+            modsButtonTransform.name = "ModsButton";
+            modsButtonTransform.anchoredPosition = Vector2.up * -140f;
+            modsButtonTransform.sizeDelta = new Vector2(75f, 30f);
+            modsButtonTransform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Mods";
+            Button modsButton = modsButtonTransform.GetComponent<Button>();
+            modsButton.onClick = new Button.ButtonClickedEvent();
+            modsButton.onClick.AddListener(openModsMenu);
+
+            RectTransform reloadButtonTransform = Instantiate(button, button.parent);
+            reloadButtonTransform.name = "ReloadButton";
+            reloadButtonTransform.anchoredPosition = Vector2.up * -175f;
+            reloadButtonTransform.sizeDelta = new Vector2(90f, 30f);
+            reloadButtonTransform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Reload";
+            Button reloadButton = reloadButtonTransform.GetComponent<Button>();
+            reloadButton.onClick = new Button.ButtonClickedEvent();
+            reloadButton.onClick.AddListener(delegate
+            {
+                SceneManager.LoadScene("Startup", LoadSceneMode.Single);
+            });
+        }
+
         private bool isModsMenuActive()
         {
             return ModBotUIRoot.Instance.ModsWindow.WindowObject.activeSelf;
@@ -170,6 +194,9 @@ namespace InternalModBot
                 _vrMainMenu._root.gameObject.SetActive(false);
             }
 
+            if (_noVrHeadsetDetectedUIMenu)
+                _noVrHeadsetDetectedUIMenu.gameObject.SetActive(false);
+
             //GameUIRoot.Instance.SetEscMenuDisabled(true);
 
             ModBotUIRoot.Instance.ModsWindow.WindowObject.SetActive(true);
@@ -188,6 +215,9 @@ namespace InternalModBot
                 if (_vrMainMenu)
                     _vrMainMenu._root.gameObject.SetActive(true);
             }
+
+            if (_noVrHeadsetDetectedUIMenu)
+                _noVrHeadsetDetectedUIMenu.gameObject.SetActive(true);
 
             ModBotUIRoot.Instance.ModsWindow.WindowObject.SetActive(false);
             //GameUIRoot.Instance.SetEscMenuDisabled(false);
@@ -222,7 +252,6 @@ namespace InternalModBot
                 return;
 
             mod.IsEnabled = true;
-            ReloadModItems();
         }
 
         private void disableMod(LoadedModInfo mod)
@@ -231,18 +260,12 @@ namespace InternalModBot
                 return;
 
             mod.IsEnabled = false;
-            ReloadModItems();
         }
 
         private void addModToList(LoadedModInfo mod, GameObject parent)
         {
-            bool isModActive = mod.IsEnabled;
-
             GameObject modItem = InternalAssetBundleReferences.ModBot.InstantiateObject("ModItemPrefab");
             modItem.transform.SetParent(parent.transform, false);
-
-            if (!isModActive)
-                modItem.GetComponent<Image>().color = DisabledModColor;
 
             _modItems.Add(modItem);
 
@@ -255,15 +278,32 @@ namespace InternalModBot
 
             Button disableButton = modItemModdedObject.GetObject<Button>(3);
             disableButton.onClick.AddListener(delegate { disableMod(mod); }); // Add disable button callback
-            disableButton.gameObject.SetActive(isModActive);
+            disableButton.onClick.AddListener(delegate { refreshModListEntry(mod, modItemModdedObject); });
 
             Button enableButton = modItemModdedObject.GetObject<Button>(5);
             enableButton.onClick.AddListener(delegate { enableMod(mod); }); // Add disable button callback
-            enableButton.gameObject.SetActive(!isModActive);
+            enableButton.onClick.AddListener(delegate { refreshModListEntry(mod, modItemModdedObject); });
 
             Button modsOptionButton = modItemModdedObject.GetObject<Button>(4);
             modsOptionButton.onClick.AddListener(delegate { openModsOptionsWindowForMod(mod); }); // Add Mod Options button callback
-            modsOptionButton.interactable = mod.ModReference != null && mod.ModReference.ImplementsSettingsWindow() && isModActive;
+
+            refreshModListEntry(mod, modItemModdedObject);
+        }
+
+        private void refreshModListEntry(LoadedModInfo mod, ModdedObject moddedObject)
+        {
+            bool isModActive = mod.IsEnabled;
+
+            moddedObject.GetComponent<Image>().color = isModActive ? EnabledModColor : DisabledModColor;
+
+            Button disableButton = moddedObject.GetObject<Button>(3);
+            disableButton.gameObject.SetActive(isModActive);
+
+            Button enableButton = moddedObject.GetObject<Button>(5);
+            enableButton.gameObject.SetActive(!isModActive);
+
+            Button modsOptionButton = moddedObject.GetObject<Button>(4);
+            modsOptionButton.interactable = !StartupManager.HasStartedWithNoHeadset() && mod.ModReference != null && mod.ModReference.ImplementsSettingsWindow() && isModActive;
         }
 
         /// <summary>

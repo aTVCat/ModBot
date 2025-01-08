@@ -45,9 +45,8 @@ namespace InternalModBot
                     if (ModReference == null)
                     {
                         ModsManager.Instance.LoadMod(OwnerModInfo);
-
                     }
-                    else
+                    else if (!StartupManager.HasStartedWithNoHeadset())
                     {
                         ModReference.OnModEnabled();
                     }
@@ -59,7 +58,8 @@ namespace InternalModBot
                 {
                     new Harmony(ModReference.HarmonyID).UnpatchAll(ModReference.HarmonyID); // unpatches all of the patches made by the mod
 
-                    ModReference.OnModDeactivated();
+                    if (!StartupManager.HasStartedWithNoHeadset())
+                        ModReference.OnModDeactivated();
                 }
 
                 ModsManager.Instance.RefreshAllLoadedActiveMods();

@@ -12,11 +12,15 @@ namespace InternalModBot
     /// </summary>
     public static class StartupManager
     {
+        private static bool _isInNoHeadsetMode;
+
         /// <summary>
         /// Sets up Mod-Mot in general, called on game start
         /// </summary>
         public static void OnStartUp()
         {
+            _isInNoHeadsetMode = false;
+
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
@@ -50,13 +54,47 @@ namespace InternalModBot
 
             IgnoreCrashesManager.Start();
 
+            if (!GameModeManager.IsDevModeEnabled() && !GameVersionManager.IsRunningOnVRHeadset())
+            {
+                HeadsetNotFoundSceneManager.Create();
+                return;
+            }
+
             stopwatch.Stop();
             debug.Log("Initialized Mod-Bot in " + stopwatch.Elapsed.TotalSeconds + " seconds");
+        }
+
+        internal static void OnStartUpNoHeadset()
+        {
+            _isInNoHeadsetMode = true;
+
+            ModBotHarmonyInjectionManager.TryInject();
+
+            if (!Directory.Exists(AssetLoader.GetModsFolderDirectory()))
+                throw new DirectoryNotFoundException("Mods folder not found!");
+
+            GameObject modBotManagers = new GameObject("ModBotManagers");
+            modBotManagers.AddComponent<ModsPanelManager>();
+            ModsManager modsManager = modBotManagers.AddComponent<ModsManager>();
+
+            initializeUI();
+            modsManager.Initialize();
+        }
+
+        public static bool HasStartedWithNoHeadset()
+        {
+            return _isInNoHeadsetMode;
         }
 
         static void initializeUI()
         {
             GameObject spawnedUI = InternalAssetBundleReferences.ModBot.InstantiateObject("Canvas");
+            if (_isInNoHeadsetMode)
+            {
+                Canvas canvas = spawnedUI.GetComponent<Canvas>();
+                canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+                canvas.sortingOrder = 2;
+            }
 
             ModdedObject spawedUIModdedObject = spawnedUI.GetComponent<ModdedObject>();
             ModBotUIRoot modBotUIRoot = spawnedUI.AddComponent<ModBotUIRoot>();

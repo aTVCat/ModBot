@@ -58,14 +58,12 @@
     <Compile Include="Experiments\UI\ModInfoUIVizualizator.cs" />
     <Compile Include="Experiments\WebisteInteraction\ModBotWebsiteInteraction.cs" />
     <Compile Include="Generic2ButtonDialogue.cs" />
-    <Compile Include="Internal\HandCanvasPointerClicker.cs" />
+    <Compile Include="Internal\HeadsetNotFoundSceneManager.cs" />
     <Compile Include="Internal\Patches\Character_Patch.cs" />
     <Compile Include="Internal\Patches\AnalyticsManager_Patch.cs" />
     <Compile Include="Internal\Patches\EscMenu_Patch.cs" />
-    <Compile Include="Internal\Patches\GameModeManager_Patch.cs" />
     <Compile Include="Internal\Patches\MainMenuUI_Patch.cs" />
     <Compile Include="Internal\Patches\VersionText_Patch.cs" />
-    <Compile Include="Internal\Patches\VRPlayerCharacter_Patch.cs" />
     <Compile Include="Internal\Patches\ErrorWindow_Patch.cs" />
     <Compile Include="Internal\Patches\LevelEditorUI_Patch.cs" />
     <Compile Include="Internal\Patches\LevelManager_SpawnCurrentLevel_ReversePatch.cs" />
@@ -82,7 +80,6 @@
     <Compile Include="Internal\Reflection\ParameterMatchType.cs" />
     <Compile Include="Internal\Reflection\PropertyInfoKey.cs" />
     <Compile Include="Internal\Reflection\ReflectionUtils.cs" />
-    <Compile Include="Internal\KeyboardMousePlayerController.cs" />
     <Compile Include="Internal\WaitForTask.cs" />
     <Compile Include="Internal\ProgressBar.cs" />
     <Compile Include="ModHandling\ModDownloading\ModDownloadManager.cs" />

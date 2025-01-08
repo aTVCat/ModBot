@@ -396,17 +396,20 @@ namespace InternalModBot
                 return false;
             }
 
-            try
+            if (!StartupManager.HasStartedWithNoHeadset()) // dont load the mod if gameplay scene is not loaded
             {
-                loadedMod.OnModLoaded();
-            }
-            catch (Exception e)
-            {
-                error = new ModLoadError(modInfo, "Caught exception in OnModLoaded, exception details: " + e.ToString());
-                return false;
-            }
+                try
+                {
+                    loadedMod.OnModLoaded();
+                }
+                catch (Exception e)
+                {
+                    error = new ModLoadError(modInfo, "Caught exception in OnModLoaded, exception details: " + e.ToString());
+                    return false;
+                }
 
-            StartCoroutine(callOnModRefreshedNextFrame(loadedModInfo));
+                StartCoroutine(callOnModRefreshedNextFrame(loadedModInfo));
+            }
 
             error = null;
             return true;

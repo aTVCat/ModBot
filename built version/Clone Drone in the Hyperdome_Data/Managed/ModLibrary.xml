@@ -5604,6 +5604,11 @@
             The color used for disabled mods
             </summary>
         </member>
+        <member name="F:InternalModBot.ModsPanelManager.EnabledModColor">
+            <summary>
+            The color used for enabled mods
+            </summary>
+        </member>
         <member name="M:InternalModBot.ModsPanelManager.OpenModsWindows(System.Action)">
             <summary>
             Opens mods panel. I actually made it for CDO mod
