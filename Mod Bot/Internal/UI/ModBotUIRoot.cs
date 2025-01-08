@@ -18,10 +18,6 @@ namespace InternalModBot
         /// </summary>
         public FPSCounterUI FPSCounter;
         /// <summary>
-        /// The mod suggesting UI
-        /// </summary>
-        public ModSuggestingUI ModSuggestingUI;
-        /// <summary>
         /// The modbot sign in UI
         /// </summary>
         public ModBotSignInUI ModBotSignInUI;
@@ -42,10 +38,6 @@ namespace InternalModBot
         /// </summary>
         public ModDownloadPage ModDownloadPage;
         /// <summary>
-        /// The mod creation UI
-        /// </summary>
-        public ModCreationWindow ModCreationWindow;
-        /// <summary>
         /// The root canvas
         /// </summary>
         public Canvas Root;
@@ -63,9 +55,6 @@ namespace InternalModBot
 
             FPSCounter = gameObject.AddComponent<FPSCounterUI>();
             FPSCounter.Init(moddedObject.GetObject<Text>(4));
-
-            ModSuggestingUI = gameObject.AddComponent<ModSuggestingUI>();
-            ModSuggestingUI.Init(moddedObject.GetObject<ModdedObject>(5));
 
             ModBotSignInUI = gameObject.AddComponent<ModBotSignInUI>();
             ModBotSignInUI.Init(moddedObject.GetObject<ModdedObject>(6));

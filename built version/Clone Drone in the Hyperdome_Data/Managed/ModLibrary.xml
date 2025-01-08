@@ -4000,76 +4000,6 @@
             <param name="info"></param>
             <param name="caughtException"></param>
         </member>
-        <member name="T:InternalModBot.ModCreationWindow">
-            <summary>
-            The window that helps get started at making a mod
-            </summary>
-        </member>
-        <member name="F:InternalModBot.ModCreationWindow.IsImplemented">
-            <summary>
-            Made this in case we don't need it
-            </summary>
-        </member>
-        <member name="F:InternalModBot.ModCreationWindow.GuideLink">
-            <summary>
-            Getting started
-            </summary>
-        </member>
-        <member name="F:InternalModBot.ModCreationWindow.Tags">
-            <summary>
-            Tags that may be assigned to mod info
-            </summary>
-        </member>
-        <member name="P:InternalModBot.ModCreationWindow.CanBeShown">
-            <summary>
-            Don't let player create mods while playing LBS, only on title screen!
-            </summary>
-        </member>
-        <member name="M:InternalModBot.ModCreationWindow.Init(ModdedObject)">
-            <summary>
-            Set the window up
-            </summary>
-            <param name="moddedObject"></param>
-        </member>
-        <member name="M:InternalModBot.ModCreationWindow.ResetWindow">
-            <summary>
-            Reset all input fields
-            </summary>
-        </member>
-        <member name="M:InternalModBot.ModCreationWindow.FocusOnModNameField">
-            <summary>
-            Select mod name input field
-            </summary>
-        </member>
-        <member name="M:InternalModBot.ModCreationWindow.GenerateNewGUID">
-            <summary>
-            Generate new id for mod
-            </summary>
-        </member>
-        <member name="M:InternalModBot.ModCreationWindow.TrySelectTag(System.String)">
-            <summary>
-            Select or deselect mod tag
-            </summary>
-            <param name="tag"></param>
-            <returns><b>True</b> if the tag was added to selected ones, <b>False</b> if was removed</returns>
-        </member>
-        <member name="M:InternalModBot.ModCreationWindow.HasSelectedTag(System.String)">
-            <summary>
-            Check if we have selected tag
-            </summary>
-            <param name="tag"></param>
-            <returns></returns>
-        </member>
-        <member name="M:InternalModBot.ModCreationWindow.TryShow">
-            <summary>
-            Show the window if possible
-            </summary>
-        </member>
-        <member name="M:InternalModBot.ModCreationWindow.TryHide">
-            <summary>
-            Hide the window or ask user about quiting
-            </summary>
-        </member>
         <member name="M:InternalModBot.ModsDownloadManager.GetDownloadingModInfo">
             <summary>
             Get mod download information
@@ -5122,11 +5052,6 @@
             The FPS counter in the corner
             </summary>
         </member>
-        <member name="F:InternalModBot.ModBotUIRoot.ModSuggestingUI">
-            <summary>
-            The mod suggesting UI
-            </summary>
-        </member>
         <member name="F:InternalModBot.ModBotUIRoot.ModBotSignInUI">
             <summary>
             The modbot sign in UI
@@ -5150,11 +5075,6 @@
         <member name="F:InternalModBot.ModBotUIRoot.ModDownloadPage">
             <summary>
             The download page UI
-            </summary>
-        </member>
-        <member name="F:InternalModBot.ModBotUIRoot.ModCreationWindow">
-            <summary>
-            The mod creation UI
             </summary>
         </member>
         <member name="F:InternalModBot.ModBotUIRoot.Root">
@@ -5252,44 +5172,6 @@
             The actual window object
             </summary>
         </member>
-        <member name="T:InternalModBot.ModSuggestingUI">
-            <summary>
-            Used by Mod-Bot to control the Twich mode mod suggesting
-            </summary>
-        </member>
-        <member name="F:InternalModBot.ModSuggestingUI.ModSuggestionAnimator">
-            <summary>
-            The animator that plays the slide in and out animation
-            </summary>
-        </member>
-        <member name="F:InternalModBot.ModSuggestingUI.DisplayText">
-            <summary>
-            Text text display where all info will be displayed
-            </summary>
-        </member>
-        <member name="F:InternalModBot.ModSuggestingUI.DeniedModIds">
-            <summary>
-            The mod ids of the mods the user has already rejected, static to persist across scene swiches
-            </summary>
-        </member>
-        <member name="M:InternalModBot.ModSuggestingUI.Init(ModdedObject)">
-            <summary>
-            Sets up the mod suggesting ui from a modded object
-            </summary>
-            <param name="moddedObject"></param>
-        </member>
-        <member name="M:InternalModBot.ModSuggestingUI.ShowNextInSuggestedModsQueue">
-            <summary>
-            Shows the next in the suggested mods queue
-            </summary>
-        </member>
-        <member name="M:InternalModBot.ModSuggestingUI.SuggestModMultiplayer(System.String,System.String)">
-            <summary>
-            Brings up the suggest window for a multiplayer suggested mod
-            </summary>
-            <param name="suggesterPlayfabID"></param>
-            <param name="modId"></param>
-        </member>
         <member name="T:InternalModBot.ModsWindow">
             <summary>
             The mods window UI
@@ -5313,11 +5195,6 @@
         <member name="F:InternalModBot.ModsWindow.OpenModsFolderButton">
             <summary>
             The open mods folder button
-            </summary>
-        </member>
-        <member name="F:InternalModBot.ModsWindow.CreateModButton">
-            <summary>
-            The create mod button
             </summary>
         </member>
         <member name="F:InternalModBot.ModsWindow.WindowObject">

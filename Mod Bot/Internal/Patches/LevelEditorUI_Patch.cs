@@ -40,7 +40,6 @@ namespace InternalModBot
             ModBotUIRoot ui = ModBotUIRoot._instance;
             return ui.Generic2ButtonDialogeUI.UIRoot.activeInHierarchy ||
                 ui.ModBotSignInUI.WindowObject.activeInHierarchy ||
-                ui.ModCreationWindow.TheGameObject.activeInHierarchy ||
                 ModBotUIRootNew.DownloadWindow.gameObject.activeInHierarchy ||
                 ui.ModDownloadPage.WindowObject.activeInHierarchy ||
                 ui.ModOptionsWindow.WindowObject.activeInHierarchy ||

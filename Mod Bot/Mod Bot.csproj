@@ -81,8 +81,6 @@
     <Compile Include="Internal\Reflection\ParameterMatchType.cs" />
     <Compile Include="Internal\Reflection\PropertyInfoKey.cs" />
     <Compile Include="Internal\Reflection\ReflectionUtils.cs" />
-    <Compile Include="Internal\UI\ModCreationWindow.cs" />
-    <Compile Include="Internal\UI\ModTagButton.cs" />
     <Compile Include="Internal\KeyboardMousePlayerController.cs" />
     <Compile Include="Internal\WaitForTask.cs" />
     <Compile Include="Internal\ProgressBar.cs" />
@@ -126,7 +124,6 @@
     <Compile Include="Internal\StartupManager.cs" />
     <Compile Include="Internal\UI\ModDownloadPage.cs" />
     <Compile Include="Internal\UI\ModOptionsWindow.cs" />
-    <Compile Include="Internal\UI\ModSuggestingUI.cs" />
     <Compile Include="Internal\UI\ModsWindow.cs" />
     <Compile Include="Internal\VersionLabelManager.cs" />
     <Compile Include="Internal\UI\ConsoleUI.cs" />
