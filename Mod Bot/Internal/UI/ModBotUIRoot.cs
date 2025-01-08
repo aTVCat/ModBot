@@ -38,6 +38,10 @@ namespace InternalModBot
         /// </summary>
         public Canvas Root;
 
+        public ModDownloadWindow DownloadWindow;
+
+        public GenericLoadingBar LoadingBar;
+
         /// <summary>
         /// Sets up the mod-bot UI from a modded object
         /// </summary>
@@ -63,6 +67,10 @@ namespace InternalModBot
 
             ModOptionsWindow = gameObject.AddComponent<ModOptionsWindow>();
             ModOptionsWindow.Init(moddedObject.GetObject<ModdedObject>(9));
+
+            DownloadWindow = moddedObject.GetObject<GameObject>(12).AddComponent<ModDownloadWindow>().Init();
+
+            LoadingBar = moddedObject.GetObject<GameObject>(13).AddComponent<GenericLoadingBar>().Init();
         }
 
         public void SetTransform(Vector3 worldPosition, Vector3 eulerAngles, float scale)

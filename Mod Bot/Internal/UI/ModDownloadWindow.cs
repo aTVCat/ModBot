@@ -8,10 +8,9 @@ using UnityEngine.UI;
 
 namespace InternalModBot
 {
-    public class ModDownloadWindowNew : MonoBehaviour
+    public class ModDownloadWindow : MonoBehaviour
     {
         private ModdedObject m_ModdedObject;
-        private UnityWebRequest m_CurrentWebRequest;
         private ModsHolder m_CurrentModsHolder;
 
         private ModdedObject m_ModInfoEntryPrefab;
@@ -28,9 +27,9 @@ namespace InternalModBot
 
         public Button XButton;
 
-        private readonly List<ModInfoUIVizualizator> m_ModInfos = new List<ModInfoUIVizualizator>();
+        private readonly List<ModInfoDisplay> m_ModInfos = new List<ModInfoDisplay>();
 
-        internal ModDownloadWindowNew Init()
+        internal ModDownloadWindow Init()
         {
             m_ModdedObject = base.GetComponent<ModdedObject>();
             XButton = m_ModdedObject.GetObject_Alt<Button>(3);
@@ -69,13 +68,16 @@ namespace InternalModBot
         {
             StopAllCoroutines();
             closeInformationWindow();
-            ModBotUIRootNew.LoadingBar.SetActive(false);
+
+            if (ModBotUIRoot.Instance.LoadingBar)
+                ModBotUIRoot.Instance.LoadingBar.SetActive(false);
+
             base.gameObject.SetActive(false);
         }
 
         public void ShowModsWithMatchingNames(string name)
         {
-            foreach (ModInfoUIVizualizator ui in m_ModInfos)
+            foreach (ModInfoDisplay ui in m_ModInfos)
             {
                 if (string.IsNullOrWhiteSpace(name))
                 {
@@ -102,7 +104,7 @@ namespace InternalModBot
             {
                 yield return new WaitForSecondsRealtime(wait);
 
-                ModInfoUIVizualizator v = Instantiate(m_ModInfoEntryPrefab, m_ModInfoEntriesContainer).gameObject.AddComponent<ModInfoUIVizualizator>().Init(info);
+                ModInfoDisplay v = Instantiate(m_ModInfoEntryPrefab, m_ModInfoEntriesContainer).gameObject.AddComponent<ModInfoDisplay>().Init(info);
                 m_ModInfos.Add(v);
 
                 index++;
@@ -118,25 +120,24 @@ namespace InternalModBot
         {
             m_ModInfos.Clear();
             TransformUtils.DestroyAllChildren(m_ModInfoEntriesContainer);
-            ModBotUIRootNew.LoadingBar.SetActive("Loading mods", 0f);
-            ModBotWebsiteInteraction.RequestAllModInfos(delegate (UnityWebRequest r)
-            {
-                m_CurrentWebRequest = r;
-            }, OnLoadedModInfos, OnFailedToLoadModInfos);
+            ModBotUIRoot.Instance.LoadingBar.SetActive("Loading mods", 0f);
+            ModBotWebsiteManager.RequestAllModInfos(null, OnLoadedModInfos, OnFailedToLoadModInfos);
         }
 
         internal void OnLoadedModInfos(ModsHolder? holder)
         {
             m_CurrentModsHolder = holder.Value;
-            ModBotUIRootNew.LoadingBar.SetActive(false);
+            ModBotUIRoot.Instance.LoadingBar.SetActive(false);
             PopulateModsHolder();
         }
 
         internal void OnFailedToLoadModInfos(string error)
         {
             Hide();
-            ModBotUIRootNew.LoadingBar.SetActive(false);
-            if (ModBotUIRoot.Instance.ModsWindow.WindowObject.activeSelf) ModErrorManager.ShowModBotSiteError(error);
+            ModBotUIRoot.Instance.LoadingBar.SetActive(false);
+
+            if (ModBotUIRoot.Instance.ModsWindow.WindowObject.activeSelf)
+                _ = new Generic2ButtonDialogue(error, "Ok", null, "Visit Website", ModBotUIRoot.Instance.DownloadWindow.OpenWebsite);
         }
 
         public void OpenWebsite()

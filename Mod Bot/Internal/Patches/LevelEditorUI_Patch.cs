@@ -5,7 +5,7 @@ namespace InternalModBot
     [HarmonyPatch(typeof(LevelEditorUI))]
     static class LevelEditorUI_Patch
     {
-        /*[HarmonyPrefix]
+        [HarmonyPrefix]
         [HarmonyPatch(nameof(LevelEditorUI.IsAnyDialogueOpen))]
         static bool IsAnyDialogueOpen_Prefix(ref bool __result)
         {
@@ -33,14 +33,17 @@ namespace InternalModBot
             {
                 return true;
             }
-        }*/
+        }
 
         private static bool areAnyModdedDialogsOpen()
         {
             ModBotUIRoot ui = ModBotUIRoot._instance;
+            if (!ui)
+                return false;
+
             return ui.Generic2ButtonDialogeUI.UIRoot.activeInHierarchy ||
                 ui.ModBotSignInUI.WindowObject.activeInHierarchy ||
-                ModBotUIRootNew.DownloadWindow.gameObject.activeInHierarchy ||
+                ui.DownloadWindow.gameObject.activeInHierarchy ||
                 ui.ModOptionsWindow.WindowObject.activeInHierarchy ||
                 ui.ModsWindow.WindowObject.activeInHierarchy;
         }

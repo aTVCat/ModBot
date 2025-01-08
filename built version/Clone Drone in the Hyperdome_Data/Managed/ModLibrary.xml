@@ -3992,14 +3992,6 @@
               Looks up a localized string similar to 2.0.3.3.
             </summary>
         </member>
-        <member name="M:InternalModBot.ModErrorManager.ShowModBotException(InternalModBot.ModErrorType,ModLibrary.ModInfo,System.Exception)">
-            <summary>
-            Show <see cref="T:InternalModBot.Generic2ButtonDialogeUI"/> window with described reason, why mod won't load
-            </summary>
-            <param name="modErrorType"></param>
-            <param name="info"></param>
-            <param name="caughtException"></param>
-        </member>
         <member name="M:InternalModBot.ModsDownloadManager.GetDownloadingModInfo">
             <summary>
             Get mod download information

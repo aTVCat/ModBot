@@ -5,11 +5,11 @@ using UnityEngine.Networking;
 
 namespace InternalModBot
 {
-    internal static class ModBotWebsiteInteraction
+    internal static class ModBotWebsiteManager
     {
         public static void RequestAllModInfos(Action<UnityWebRequest> webRequestVariable, Action<ModsHolder?> downloadedData, Action<string> onCaughtError = null)
         {
-            _ = StaticCoroutineRunner.StartStaticCoroutine(requestAllModInfos(delegate (UnityWebRequest r) { webRequestVariable(r); }, downloadedData, onCaughtError));
+            _ = StaticCoroutineRunner.StartStaticCoroutine(requestAllModInfos(delegate (UnityWebRequest r) { if(webRequestVariable != null) webRequestVariable(r); }, downloadedData, onCaughtError));
         }
 
         private static IEnumerator requestAllModInfos(Action<UnityWebRequest> webRequestVariable, Action<ModsHolder?> downloadedData, Action<string> onCaughtError = null)
@@ -17,16 +17,17 @@ namespace InternalModBot
             using (UnityWebRequest webRequest = UnityWebRequest.Get("https://modbot.org/api?operation=getAllModInfos"))
             {
                 webRequest.timeout = 9;
-                webRequestVariable(webRequest);
+
+                if(webRequestVariable != null)
+                    webRequestVariable(webRequest);
 
                 yield return StaticCoroutineRunner.StartStaticCoroutine(updateProgressOfAsyncOperation(webRequest.SendWebRequest()));
 
-                if (webRequest.isNetworkError || webRequest.isHttpError)
+                if (webRequest.result != UnityWebRequest.Result.Success)
                 {
                     if (onCaughtError != null)
-                    {
                         onCaughtError("Cannot load mods page. Error details: " + webRequest.error + "\nTry visiting the website");
-                    }
+
                     yield break;
                 }
 
@@ -38,13 +39,13 @@ namespace InternalModBot
 
         private static IEnumerator updateProgressOfAsyncOperation(UnityWebRequestAsyncOperation operation)
         {
-            ModBotUIRootNew.LoadingBar.SetProgress(0f);
+            ModBotUIRoot.Instance.LoadingBar.SetProgress(0f);
             while (!operation.isDone)
             {
-                ModBotUIRootNew.LoadingBar.SetProgress(operation.progress);
+                ModBotUIRoot.Instance.LoadingBar.SetProgress(operation.progress);
                 yield return null;
             }
-            ModBotUIRootNew.LoadingBar.SetProgress(1f);
+            ModBotUIRoot.Instance.LoadingBar.SetProgress(1f);
         }
     }
 }

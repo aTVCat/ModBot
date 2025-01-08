@@ -111,7 +111,7 @@ namespace InternalModBot
 
                 while (!request.isDone)
                 {
-                    if (webRequest.isHttpError || webRequest.isNetworkError)
+                    if (webRequest.result != UnityWebRequest.Result.Success)
                     {
                         debug.Log($"Network error while downloading mod {modInfo.DisplayName} ({modInfo.UniqueID}): {webRequest.error}");
 
@@ -177,12 +177,15 @@ namespace InternalModBot
 
                 yield return webRequest.SendWebRequest();
 
-                if (webRequest.isNetworkError || webRequest.isHttpError)
+                if (webRequest.result != UnityWebRequest.Result.Success)
                 {
                     _modInfoDownloadWebRequest = null;
-                    string error = webRequest.error + "\n(" + "Network: " + webRequest.isNetworkError + " HTTP: " + webRequest.isHttpError + ")";
+
+                    string error = $"{webRequest.error}\r\n({webRequest.result})";
+
                     if (onGotError != null) onGotError(error);
                     if (onGotError != null) onFinishDownload(null);
+
                     webRequest.Dispose();
 
                     yield break;

@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace InternalModBot
 {
-    internal class ModInfoUIVizualizator : MonoBehaviour
+    internal class ModInfoDisplay : MonoBehaviour
     {
         private bool m_HasInitialized;
 
@@ -46,7 +46,7 @@ namespace InternalModBot
         private static ModsDownloadManager.ModDownloadInfo m_DownloadInfo;
         public static bool IsDownloadingAMod(string id) => m_DownloadInfo != null && m_DownloadInfo.ModInformation != null && id.Equals(m_DownloadInfo.ModInformation.UniqueID);
 
-        public ModInfoUIVizualizator Init(ModInfo info)
+        public ModInfoDisplay Init(ModInfo info)
         {
             m_ModdedObject = base.GetComponent<ModdedObject>();
             m_CanvasGroup = base.GetComponent<CanvasGroup>();
@@ -190,7 +190,7 @@ namespace InternalModBot
             using (UnityWebRequest webRequest = UnityWebRequestTexture.GetTexture(url))
             {
                 yield return webRequest.SendWebRequest();
-                if (webRequest.isHttpError || webRequest.isNetworkError)
+                if (webRequest.result != UnityWebRequest.Result.Success)
                     yield break;
 
                 Texture2D texture = (webRequest.downloadHandler as DownloadHandlerTexture).texture;
@@ -266,7 +266,7 @@ namespace InternalModBot
 
         public void ShowDetails()
         {
-            ModBotUIRootNew.DownloadWindow.OpenInformationWindow(m_ModInfo, m_SpecialData, m_Thumbnail.texture);
+            ModBotUIRoot.Instance.DownloadWindow.OpenInformationWindow(m_ModInfo, m_SpecialData, m_Thumbnail.texture);
             SetControlsBGVisible(false);
         }
 

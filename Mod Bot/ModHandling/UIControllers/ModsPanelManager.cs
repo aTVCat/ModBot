@@ -55,8 +55,6 @@ namespace InternalModBot
             ModBotUIRoot.Instance.ModsWindow.GetMoreModsButton.onClick.AddListener(onGetMoreModsClicked); // Add more mods clicked callback
             ModBotUIRoot.Instance.ModsWindow.OpenModsFolderButton.onClick.AddListener(onModsFolderClicked); // Add mods folder clicked callback
 
-            ModBotUIRoot.Instance.gameObject.AddComponent<ModBotUIRootNew>().Init();
-
             if (StartupManager.HasStartedWithNoHeadset())
             {
                 NoVRHeadsetDetectedUIMenu noVRHeadsetDetectedUIMenu = FindObjectOfType<NoVRHeadsetDetectedUIMenu>();
@@ -232,7 +230,7 @@ namespace InternalModBot
 
         private void onGetMoreModsClicked()
         {
-            ModBotUIRootNew.DownloadWindow.Show();
+            ModBotUIRoot.Instance.DownloadWindow.Show();
         }
 
         private void onModsFolderClicked()
