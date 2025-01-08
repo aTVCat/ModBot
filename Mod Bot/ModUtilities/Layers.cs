@@ -4,6 +4,8 @@
 
 namespace ModLibrary
 {
+    // todo: update this to match hyperdome's layers
+
     /// <summary>
     /// Defines constants that represent the different layers defined in the unity editor
     /// </summary>

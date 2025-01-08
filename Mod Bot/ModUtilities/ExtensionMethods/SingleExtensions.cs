@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -35,7 +36,13 @@ namespace ModLibrary
             throw new InvalidCastException("Object at index " + index + " could not be casted to type " + typeof(T).ToString());
         }
 
-
+        /// <summary>
+        /// Alternative for <see cref="GetObject{T}(ModdedObject, int)"/>. Searches for GameObject and finds the component
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="moddedObject"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
         internal static T GetObject_Alt<T>(this ModdedObject moddedObject, int index) where T : UnityEngine.Object
         {
             return (moddedObject.objects[index] as GameObject).GetComponent<T>();
@@ -59,16 +66,14 @@ namespace ModLibrary
         /// <exception cref="ArgumentNullException"><paramref name="levelDescription"/> is <see langword="null"/></exception>
         public static LevelEditorLevelData GetLevelEditorLevelData(this LevelDescription levelDescription)
         {
-            //todo: update this
-
             if (levelDescription is null)
                 throw new ArgumentNullException(nameof(levelDescription));
-
-            /*
+            
             LevelEditorLevelData levelEditorLevelData = null;
-            if (levelDescription.LevelTags.Contains(LevelTags.LevelEditor))
+            if (!string.IsNullOrEmpty(levelDescription.PathUnderResourcesLevelFolder))
             {
-                string prefabPath = "Data/LevelEditorLevels/" + levelDescription.PrefabName;
+                string prefabPath = "Data/LevelEditorLevels/" + levelDescription.PathUnderResourcesLevelFolder;
+
                 UnityEngine.Object levelJsonObject = Resources.Load(prefabPath);
                 if (levelJsonObject == null)
                 {
@@ -78,38 +83,11 @@ namespace ModLibrary
 
                 levelEditorLevelData = JsonConvert.DeserializeObject<LevelEditorLevelData>((levelJsonObject as TextAsset).text, DataRepository.Instance.GetSettings());
             }
-
-            if (levelDescription.IsStreamedMultiplayerLevel)
+            else if (!string.IsNullOrEmpty(levelDescription.JSONPathOnDisk))
             {
-                string levelJSON = MultiplayerLevelStreamingManager.Instance.GetLevelJSON(levelDescription.LevelID);
-                levelEditorLevelData = JsonConvert.DeserializeObject<LevelEditorLevelData>(levelJSON, DataRepository.Instance.GetSettings());
+                levelEditorLevelData = LevelManager.Instance.LoadLevelEditorLevelData(levelDescription.JSONPathOnDisk);
             }
-            else if (levelDescription.IsPlayfabHostedLevel)
-            {
-                bool loadedLevelData;
-                if (GameVersionManager.IsConsoleBuild() && !GameVersionManager.IsUnityEditor())
-                {
-                    loadedLevelData = DataRepository.Instance.levelDataContainer.TryGetLevelEditorLevelData(levelDescription.LevelJSONPath, out levelEditorLevelData);
-                }
-                else
-                {
-                    loadedLevelData = DataRepository.Instance.TryLoad(levelDescription.LevelJSONPath, out levelEditorLevelData, false);
-                }
-
-                if (!loadedLevelData)
-                {
-                    UnityEngine.Debug.LogError("[LevelManager.SpawnCurrentLevel] Count not load level " + levelDescription.LevelID);
-                    return null;
-                }
-            }
-            else if (levelDescription.IsLevelEditorLevel() && !GameModeManager.UsesWorkshopChallengeLevels())
-            {
-                levelEditorLevelData = LevelManager.Instance.LoadLevelEditorLevelData(levelDescription.LevelJSONPath);
-            }
-
-            return levelEditorLevelData;*/
-
-            return null;
+            return levelEditorLevelData;
         }
     }
 }
