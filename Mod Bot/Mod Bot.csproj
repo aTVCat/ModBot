@@ -64,6 +64,7 @@
     <Compile Include="Internal\Patches\EscMenu_Patch.cs" />
     <Compile Include="Internal\Patches\GameModeManager_Patch.cs" />
     <Compile Include="Internal\Patches\MainMenuUI_Patch.cs" />
+    <Compile Include="Internal\Patches\VersionText_Patch.cs" />
     <Compile Include="Internal\Patches\VRPlayerCharacter_Patch.cs" />
     <Compile Include="Internal\Patches\ErrorWindow_Patch.cs" />
     <Compile Include="Internal\Patches\LevelEditorUI_Patch.cs" />

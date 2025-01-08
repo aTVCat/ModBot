@@ -78,11 +78,13 @@ namespace InternalModBot
             RectTransform settingsButton = TransformUtils.FindChildRecursive(mainMenuUI.transform, "SettingsButton") as RectTransform;
             RectTransform creditsButton = TransformUtils.FindChildRecursive(mainMenuUI.transform, "CreditsButton") as RectTransform;
             RectTransform topArea = settingsButton.parent as RectTransform;
+            RectTransform bottomArea = TransformUtils.FindChildRecursive(mainMenuUI.transform, "BottomButtonArea") as RectTransform;
+            bottomArea.anchoredPosition += Vector2.up * 10f; // raise exit button to not overlap version text
 
             // adjust main menu height to fit mods button
             RectTransform mainMenuRoot = topArea.parent as RectTransform;
             Vector2 mainMenuRootSizeDelta = mainMenuRoot.sizeDelta;
-            mainMenuRootSizeDelta.y = 210f;
+            mainMenuRootSizeDelta.y = 220f;
             mainMenuRoot.sizeDelta = mainMenuRootSizeDelta;
 
             RectTransform modsButton = Instantiate(settingsButton, topArea);
