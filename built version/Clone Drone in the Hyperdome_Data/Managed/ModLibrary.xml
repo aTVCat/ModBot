@@ -1466,32 +1466,6 @@
             <param name="value">The value stored in the metadata with the specified key</param>
             <returns><see langword="true"/> if <paramref name="key"/> exists in the metadata of <paramref name="levelData"/>, and <see langword="false"/> if not</returns>
         </member>
-        <member name="T:ModLibrary.InjectionPostfixTargetAttribute">
-            <summary>
-            Patches the target property with whatever method it's applied to as the postfix. See <see href="https://harmony.pardeike.net/articles/patching-postfix.html"/> for details about how postfixes work.<para/>Generic methods are not officially supported by 0Harmony and cannot be patched by using this attribute.
-            </summary>
-        </member>
-        <member name="M:ModLibrary.InjectionPostfixTargetAttribute.#ctor(System.Type,System.String,System.Type[])">
-            <summary>
-            Initializes the <see cref="T:ModLibrary.InjectionPostfixTargetAttribute"/> attribute with a target method
-            </summary>
-            <param name="type">The type the target method is attached to</param>
-            <param name="methodName">The name of the target method</param>
-            <param name="methodParameters">The parameter types on the target method</param>
-        </member>
-        <member name="T:ModLibrary.InjectionPrefixTargetAttribute">
-            <summary>
-            Patches the target method with whatever method it's applied to as the prefix. See <see href="https://harmony.pardeike.net/articles/patching-prefix.html"/> for details about how prefixes work.<para/>Generic methods are not officially supported by 0Harmony and cannot be patched by using this attribute.
-            </summary>
-        </member>
-        <member name="M:ModLibrary.InjectionPrefixTargetAttribute.#ctor(System.Type,System.String,System.Type[])">
-            <summary>
-            Initializes the <see cref="T:ModLibrary.InjectionPrefixTargetAttribute"/> attribute with a target method
-            </summary>
-            <param name="type">The type the target method is attached to</param>
-            <param name="methodName">The name of the target method</param>
-            <param name="methodParameters">The parameter types on the target method</param>
-        </member>
         <member name="T:ModLibrary.debug">
             <summary>
             Allows you to write to the in-game console (open it with F1).
@@ -4026,11 +4000,6 @@
         <member name="F:InternalModBot.ModsHolder.Mods">
             <summary>
             A list of all the mods downloaded.
-            </summary>
-        </member>
-        <member name="T:InternalModBot.InjectionTargetAttribute">
-            <summary>
-            Base attribute type for 0Harmony patch targets
             </summary>
         </member>
         <member name="T:InternalModBot.CalledFromInjections">

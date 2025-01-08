@@ -74,12 +74,6 @@ namespace InternalModBot
                 Assembly modAssembly = ModReference.GetType().Assembly;
 
                 harmony.PatchAll(modAssembly);
-
-                List<InjectionInfo> injectionInfos = InjectionTargetAttribute.GetInjectionTargetsInAssembly(modAssembly);
-                foreach (InjectionInfo injectionInfo in injectionInfos)
-                {
-                    injectionInfo.Patch(harmony);
-                }
             }
         }
     }

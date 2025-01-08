@@ -85,10 +85,6 @@
     <Compile Include="ModUtilities\CodeInstrucionComparisonMode.cs" />
     <Compile Include="ModUtilities\ExtensionMethods\StringExtensions.cs" />
     <Compile Include="ModUtilities\LevelEditor\LevelEditorModdedMetadataManager.cs" />
-    <Compile Include="Patching\Attributes\Postfix\InjectionPostfixTargetAttribute.cs" />
-    <Compile Include="Patching\Attributes\Prefix\InjectionPrefixTargetAttribute.cs" />
-    <Compile Include="Patching\InjectionInfo.cs" />
-    <Compile Include="Patching\Attributes\InjectionTargetAttribute.cs" />
     <Compile Include="Internal\InternalAssetBundleReferences.cs" />
     <Compile Include="Internal\CalledFromInjections.cs" />
     <Compile Include="Debug.cs" />
