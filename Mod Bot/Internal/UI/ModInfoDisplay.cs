@@ -70,7 +70,7 @@ namespace InternalModBot
             m_LikeButton.interactable = false;
             m_LikesCount = m_ModdedObject.GetObject_Alt<Text>(13);
             m_MoreInfoButton = m_ModdedObject.GetObject_Alt<Button>(5);
-            m_MoreInfoButton.onClick.AddListener(ToggleControlsBGVisibility);
+            m_MoreInfoButton.onClick.AddListener(ShowDetails);
             m_DownloadProgressBar = m_ModdedObject.GetObject_Alt<Slider>(12);
             m_DownloadCount = m_ModdedObject.GetObject_Alt<Text>(11);
             m_DownloadButton = m_ModdedObject.GetObject_Alt<Button>(4);

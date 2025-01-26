@@ -3,7 +3,6 @@ using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.UI;
 
 namespace InternalModBot
@@ -98,20 +97,12 @@ namespace InternalModBot
         }
         private IEnumerator asyncPopulateModsHolder()
         {
-            float wait = 0.04f;
-            int index = 1;
-            foreach (ModInfo info in m_CurrentModsHolder.Mods)
+            for (int i = 0; i < m_CurrentModsHolder.Mods.Length; i++)
             {
-                yield return new WaitForSecondsRealtime(wait);
-
-                ModInfoDisplay v = Instantiate(m_ModInfoEntryPrefab, m_ModInfoEntriesContainer).gameObject.AddComponent<ModInfoDisplay>().Init(info);
+                ModInfoDisplay v = Instantiate(m_ModInfoEntryPrefab, m_ModInfoEntriesContainer).gameObject.AddComponent<ModInfoDisplay>().Init(m_CurrentModsHolder.Mods[i]);
                 m_ModInfos.Add(v);
 
-                index++;
-                if (index >= 9)
-                {
-                    wait = 0.1f;
-                }
+                yield return null;
             }
             yield break;
         }
