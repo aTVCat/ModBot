@@ -4121,6 +4121,11 @@
               Looks up a localized string similar to 2.0.3.3.
             </summary>
         </member>
+        <member name="T:InternalModBot.HeadsetNotFoundSceneManager">
+            <summary>
+            A manager that initializes mod bot when NoVrHeadsetFoundScene scene loads in
+            </summary>
+        </member>
         <member name="M:InternalModBot.ModsDownloadManager.GetDownloadingModInfo">
             <summary>
             Get mod download information

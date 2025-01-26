@@ -1,6 +1,7 @@
 ﻿using InternalModBot;
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -54,7 +55,7 @@ namespace ModLibrary
                 GameObject spawnedButton = GameObject.Instantiate(buttonPrefab);
                 spawnedButton.transform.SetParent(ModBotUIRoot.Instance.ModOptionsWindow.PageButtonsHolder.transform, false);
                 ModdedObject moddedObject = spawnedButton.GetComponent<ModdedObject>();
-                moddedObject.GetObject<Text>(0).text = page.Name;
+                moddedObject.GetObject<TextMeshProUGUI>(0).text = page.Name;
                 moddedObject.GetObject<Button>(1).onClick.AddListener(delegate { SetPage(page); });
             }
         }

@@ -67,6 +67,7 @@ namespace InternalModBot
 
             ModOptionsWindow = gameObject.AddComponent<ModOptionsWindow>();
             ModOptionsWindow.Init(moddedObject.GetObject<ModdedObject>(9));
+            ModOptionsWindow.WindowObject.SetActive(false);
 
             DownloadWindow = moddedObject.GetObject<GameObject>(12).AddComponent<ModDownloadWindow>().Init();
 
