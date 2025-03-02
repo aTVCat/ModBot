@@ -60,6 +60,7 @@ namespace InternalModBot
         public void Show()
         {
             base.gameObject.SetActive(true);
+            ModBotUIRoot.Instance.ModsWindow.WindowObject.SetActive(false);
             LoadDownloadPage();
         }
 
@@ -72,6 +73,7 @@ namespace InternalModBot
                 ModBotUIRoot.Instance.LoadingBar.SetActive(false);
 
             base.gameObject.SetActive(false);
+            ModBotUIRoot.Instance.ModsWindow.WindowObject.SetActive(true);
         }
 
         public void ShowModsWithMatchingNames(string name)
