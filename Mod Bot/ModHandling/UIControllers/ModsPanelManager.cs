@@ -1,4 +1,5 @@
-﻿using ModLibrary;
+﻿using Autohand;
+using ModLibrary;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Org.BouncyCastle.Math.Raw;
@@ -39,6 +40,8 @@ namespace InternalModBot
 
         private NoVRHeadsetDetectedUIMenu _noVrHeadsetDetectedUIMenu;
 
+        private ConsoleLaptopUI _laptopConsoleUI;
+
         private bool _isShowingModsMenuOverPauseMenu;
 
         private readonly List<GameObject> _modItems = new List<GameObject>();
@@ -60,6 +63,60 @@ namespace InternalModBot
                 NoVRHeadsetDetectedUIMenu noVRHeadsetDetectedUIMenu = FindObjectOfType<NoVRHeadsetDetectedUIMenu>();
                 PatchNoVRHeadsetDetectedUIMenu(noVRHeadsetDetectedUIMenu);
             }
+        }
+
+        public void InstantiateConsoleLaptop(bool hide)
+        {
+            GameObject gameObject = Instantiate(InternalAssetBundleReferences.ModBot.GetObject<GameObject>("ConsoleLaptop"));
+            _laptopConsoleUI = initializeConsoleLaptop(gameObject);
+            _laptopConsoleUI.gameObject.SetActive(!hide);
+        }
+
+        public void ShowConsoleLaptop()
+        {
+            if (!_laptopConsoleUI)
+            {
+                InstantiateConsoleLaptop(false);
+                return;
+            }
+            _laptopConsoleUI.gameObject.SetActive(true);
+        }
+
+        public void HideConsoleLaptop()
+        {
+            if (_laptopConsoleUI)
+            {
+                _laptopConsoleUI.gameObject.SetActive(false);
+            }
+        }
+
+        private ConsoleLaptopUI initializeConsoleLaptop(GameObject gameObject)
+        {
+            bool state = gameObject.activeSelf;
+            gameObject.SetActive(false); // set laptop object non active to avoid a crash caused by Grabbables
+
+            ModdedObject moddedObject = gameObject.GetComponent<ModdedObject>();
+            Grabbable grabbableRight = moddedObject.GetObject<GameObject>(0).AddComponent<Grabbable>();
+            grabbableRight.grabType = HandGrabType.GrabbableToHand;
+            grabbableRight.body = gameObject.GetComponent<Rigidbody>();
+            grabbableRight.isGrabbable = true;
+            grabbableRight.makeChildrenGrabbable = false;
+            grabbableRight.jointedBodies = new List<Rigidbody>();
+
+            Grabbable grabbableLeft = moddedObject.GetObject<GameObject>(1).AddComponent<Grabbable>();
+            grabbableLeft.grabType = HandGrabType.GrabbableToHand;
+            grabbableLeft.body = gameObject.GetComponent<Rigidbody>();
+            grabbableLeft.isGrabbable = true;
+            grabbableLeft.makeChildrenGrabbable = false;
+            grabbableLeft.jointedBodies = new List<Rigidbody>();
+
+            moddedObject.GetObject<Canvas>(4).gameObject.AddComponent<AssignCanvasToAutoHandPointer>();
+            moddedObject.GetObject<Canvas>(5).gameObject.AddComponent<AssignCanvasToAutoHandPointer>();
+
+            gameObject.SetActive(state);
+
+            ConsoleLaptopUI consoleLaptopUI = gameObject.AddComponent<ConsoleLaptopUI>();
+            return consoleLaptopUI;
         }
 
         internal void PatchVRMainMenu(VR.UI.MainMenuUI mainMenuUI)

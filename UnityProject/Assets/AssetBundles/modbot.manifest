@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1006478577
+CRC: 3290378675
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a23e9ccf262747e7a42411ad9bd34315
+    Hash: 5539a915381011aad0c91b54c0156d56
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 21a624be00c8e801f7e7f5b4ef5ee17a
+    Hash: d58cfc61902b0dd9782321c49cbc0521
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -24,6 +24,8 @@ ClassTypes:
 - Class: 43
   Script: {instanceID: 0}
 - Class: 48
+  Script: {instanceID: 0}
+- Class: 54
   Script: {instanceID: 0}
 - Class: 65
   Script: {instanceID: 0}
@@ -170,9 +172,10 @@ Assets:
 - Assets/Materials/Line.mat
 - Assets/Prefabs/UpgradeScreenButtons/PreviousPageButton.prefab
 - Assets/Images/javascript.png
-- Assets/Prefabs/ModsMenu/ModItemPrefab.prefab
+- Assets/Prefabs/Console/ConsoleLaptop.prefab
 - Assets/Prefabs/Console/ConsoleTextElement.prefab
 - Assets/Prefabs/ModOptions/PageButton.prefab
+- Assets/Prefabs/ModsMenu/ModItemPrefab.prefab
 - Assets/Prefabs/ModOptions/Checkbox.prefab
 - Assets/Images/modbot.png
 - Assets/Prefabs/ModOptions/CustomKeyCodeInput.prefab
