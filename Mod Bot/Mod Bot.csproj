@@ -75,7 +75,6 @@
     <Compile Include="Internal\Reflection\PropertyInfoKey.cs" />
     <Compile Include="Internal\Reflection\ReflectionUtils.cs" />
     <Compile Include="Internal\UI\GenericLoadingBar.cs" />
-    <Compile Include="Internal\UI\ConsoleLaptopUI.cs" />
     <Compile Include="Internal\UI\ModDownloadWindow.cs" />
     <Compile Include="Internal\UI\ModInfoDisplay.cs" />
     <Compile Include="Internal\WaitForTask.cs" />

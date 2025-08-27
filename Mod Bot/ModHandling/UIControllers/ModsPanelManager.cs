@@ -1,16 +1,10 @@
-﻿using Autohand;
-using ModLibrary;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Org.BouncyCastle.Math.Raw;
+﻿using ModLibrary;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Networking;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using VR.UI;
@@ -32,19 +26,17 @@ namespace InternalModBot
         /// </summary>
         public readonly Color EnabledModColor = new Color(0.47f, 0.3f, 0.2f, 1f);
 
-        private Action _actionOnModsPanelClose = null;
-
         private MainMenuUI _vrMainMenu;
 
         private VRPauseMenu _vrPauseMenu;
 
         private NoVRHeadsetDetectedUIMenu _noVrHeadsetDetectedUIMenu;
 
-        private ConsoleLaptopUI _laptopConsoleUI;
+        private readonly List<GameObject> _modItems = new List<GameObject>();
+
+        private Action _actionOnModsPanelClose;
 
         private bool _isShowingModsMenuOverPauseMenu;
-
-        private readonly List<GameObject> _modItems = new List<GameObject>();
 
         private void Start()
         {
@@ -65,84 +57,13 @@ namespace InternalModBot
             }
         }
 
-        public void InstantiateConsoleLaptop(bool hide)
-        {
-            GameObject gameObject = Instantiate(InternalAssetBundleReferences.ModBot.GetObject<GameObject>("ConsoleLaptop"));
-            _laptopConsoleUI = initializeConsoleLaptop(gameObject);
-            _laptopConsoleUI.gameObject.SetActive(!hide);
-        }
-
-        public void ShowConsoleLaptop()
-        {
-            if (!_laptopConsoleUI)
-            {
-                InstantiateConsoleLaptop(false);
-                return;
-            }
-            _laptopConsoleUI.gameObject.SetActive(true);
-        }
-
-        public void HideConsoleLaptop()
-        {
-            if (_laptopConsoleUI)
-            {
-                _laptopConsoleUI.gameObject.SetActive(false);
-            }
-        }
-
-        private ConsoleLaptopUI initializeConsoleLaptop(GameObject gameObject)
-        {
-            bool state = gameObject.activeSelf;
-            gameObject.SetActive(false); // set laptop object non active to avoid a crash caused by Grabbables
-
-            ModdedObject moddedObject = gameObject.GetComponent<ModdedObject>();
-            Grabbable grabbableRight = moddedObject.GetObject<GameObject>(0).AddComponent<Grabbable>();
-            grabbableRight.grabType = HandGrabType.GrabbableToHand;
-            grabbableRight.body = gameObject.GetComponent<Rigidbody>();
-            grabbableRight.isGrabbable = true;
-            grabbableRight.makeChildrenGrabbable = false;
-            grabbableRight.jointedBodies = new List<Rigidbody>();
-
-            Grabbable grabbableLeft = moddedObject.GetObject<GameObject>(1).AddComponent<Grabbable>();
-            grabbableLeft.grabType = HandGrabType.GrabbableToHand;
-            grabbableLeft.body = gameObject.GetComponent<Rigidbody>();
-            grabbableLeft.isGrabbable = true;
-            grabbableLeft.makeChildrenGrabbable = false;
-            grabbableLeft.jointedBodies = new List<Rigidbody>();
-
-            moddedObject.GetObject<Canvas>(4).gameObject.AddComponent<AssignCanvasToAutoHandPointer>();
-            moddedObject.GetObject<Canvas>(5).gameObject.AddComponent<AssignCanvasToAutoHandPointer>();
-
-            gameObject.SetActive(state);
-
-            ConsoleLaptopUI consoleLaptopUI = gameObject.AddComponent<ConsoleLaptopUI>();
-            return consoleLaptopUI;
-        }
-
-        internal void PatchVRMainMenu(VR.UI.MainMenuUI mainMenuUI)
+        internal void PatchVRMainMenu(VR.UI.MainMenuUI mainMenu)
         {
             if (GameModeManager.IsInLevelEditor())
                 return;
 
-            _vrMainMenu = mainMenuUI;
-
-            RectTransform settingsButton = TransformUtils.FindChildRecursive(mainMenuUI.transform, "SettingsButton") as RectTransform;
-            RectTransform creditsButton = TransformUtils.FindChildRecursive(mainMenuUI.transform, "CreditsButton") as RectTransform;
-            RectTransform topArea = settingsButton.parent as RectTransform;
-            RectTransform bottomArea = TransformUtils.FindChildRecursive(mainMenuUI.transform, "BottomButtonArea") as RectTransform;
-            bottomArea.anchoredPosition += Vector2.up * 10f; // raise exit button to not overlap version text
-
-            // adjust main menu height to fit mods button
-            RectTransform mainMenuRoot = topArea.parent as RectTransform;
-            Vector2 mainMenuRootSizeDelta = mainMenuRoot.sizeDelta;
-            mainMenuRootSizeDelta.y = 220f;
-            mainMenuRoot.sizeDelta = mainMenuRootSizeDelta;
-
-            RectTransform modsButton = Instantiate(settingsButton, topArea);
-            modsButton.name = "ModsButton";
-            Button button = modsButton.GetComponent<Button>();
-            button.onClick = new Button.ButtonClickedEvent();
-            button.onClick.AddListener(delegate
+            _vrMainMenu = mainMenu;
+            addButtonToMainMenu(mainMenu, "Mods", delegate
             {
                 if (_isShowingModsMenuOverPauseMenu && isModsMenuActive())
                 {
@@ -150,47 +71,28 @@ namespace InternalModBot
                 }
 
                 _isShowingModsMenuOverPauseMenu = false;
-                ModBotUIRoot.Instance.SetTransform(mainMenuUI.transform.position + (mainMenuUI.transform.forward * -0.6f) + (mainMenuUI.transform.up * 0.2f), mainMenuUI.transform.eulerAngles, 0.004f);
+                ModBotUIRoot.Instance.SetTransform(mainMenu.transform.position + (mainMenu.transform.forward * -0.6f) + (mainMenu.transform.up * 0.2f), mainMenu.transform.eulerAngles, 0.004f);
+
+                openModsMenu();
             });
-            button.onClick.AddListener(openModsMenu);
-
-            TMPro.TextMeshProUGUI label = modsButton.GetComponentInChildren<TMPro.TextMeshProUGUI>();
-            label.text = "Mods";
-
-            // lower other buttons
-            settingsButton.anchoredPosition += Vector2.down * 35f;
-            creditsButton.anchoredPosition += Vector2.down * 35f;
+            addButtonToMainMenu(mainMenu, "Dev laptop", spawnDevLaptop);
         }
 
         internal void PatchVRPauseMenu(VRPauseMenu pauseMenu)
         {
-            RectTransform settingsButton = TransformUtils.FindChildRecursive(pauseMenu.transform, "SettingsButton") as RectTransform;
-            RectTransform topArea = settingsButton.parent as RectTransform;
-
-            // adjust pause menu height to fit mods button
-            RectTransform mainMenuRoot = topArea.parent as RectTransform;
-            Vector2 mainMenuRootSizeDelta = mainMenuRoot.sizeDelta;
-            mainMenuRootSizeDelta.y = 210f;
-            mainMenuRoot.sizeDelta = mainMenuRootSizeDelta;
-
-            RectTransform modsButton = Instantiate(settingsButton, topArea);
-            modsButton.name = "ModsButton";
-            Button button = modsButton.GetComponent<Button>();
-            button.onClick = new Button.ButtonClickedEvent();
-            button.onClick.AddListener(delegate
+            addButtonToPauseMenu(pauseMenu, "Mods", delegate
             {
-                if(!_isShowingModsMenuOverPauseMenu && isModsMenuActive())
+                if (!_isShowingModsMenuOverPauseMenu && isModsMenuActive())
                 {
                     closeModsMenu();
                 }
 
                 _isShowingModsMenuOverPauseMenu = true;
                 ModBotUIRoot.Instance.SetTransform(pauseMenu.transform.position + (pauseMenu.transform.forward * 1.6f) + (pauseMenu.transform.up * 2.1f), pauseMenu.transform.eulerAngles, 0.003f);
-            });
-            button.onClick.AddListener(openModsMenu);
 
-            TMPro.TextMeshProUGUI label = modsButton.GetComponentInChildren<TMPro.TextMeshProUGUI>();
-            label.text = "Mods";
+                openModsMenu();
+            });
+            addButtonToPauseMenu(pauseMenu, "Dev laptop", spawnDevLaptop);
         }
 
         public void PatchNoVRHeadsetDetectedUIMenu(NoVRHeadsetDetectedUIMenu noHeadsetDetectedUIMenu)
@@ -221,16 +123,67 @@ namespace InternalModBot
             });
         }
 
+        private void addButtonToMainMenu(VR.UI.MainMenuUI mainMenu, string text, UnityAction action)
+        {
+            RectTransform settingsButton = TransformUtils.FindChildRecursive(mainMenu.transform, "SettingsButton") as RectTransform;
+            RectTransform creditsButton = TransformUtils.FindChildRecursive(mainMenu.transform, "CreditsButton") as RectTransform;
+            RectTransform topArea = settingsButton.parent as RectTransform;
+            RectTransform bottomArea = TransformUtils.FindChildRecursive(mainMenu.transform, "BottomButtonArea") as RectTransform;
+            bottomArea.anchoredPosition = Vector2.up * 20f;
+
+            // adjust main menu height to fit buttons
+            RectTransform mainMenuRoot = topArea.parent as RectTransform;
+            mainMenuRoot.sizeDelta += Vector2.up * 35f;
+
+            RectTransform modsButton = Instantiate(settingsButton, topArea);
+            modsButton.name = text;
+            Button button = modsButton.GetComponent<Button>();
+            button.onClick = new Button.ButtonClickedEvent();
+            button.onClick.AddListener(action);
+
+            TextMeshProUGUI label = modsButton.GetComponentInChildren<TextMeshProUGUI>();
+            label.text = text;
+
+            // lower other buttons
+            settingsButton.anchoredPosition += Vector2.down * 35f;
+            creditsButton.anchoredPosition += Vector2.down * 35f;
+        }
+
+        private void addButtonToPauseMenu(VRPauseMenu pauseMenu, string text, UnityAction action)
+        {
+            RectTransform settingsButton = TransformUtils.FindChildRecursive(pauseMenu.transform, "SettingsButton") as RectTransform;
+            RectTransform topArea = settingsButton.parent as RectTransform;
+
+            // adjust pause menu height to fit buttons
+            RectTransform mainMenuRoot = topArea.parent as RectTransform;
+            mainMenuRoot.sizeDelta += Vector2.up * 35f;
+            mainMenuRoot.anchoredPosition += Vector2.up * 35f * 0.5f;
+
+            RectTransform modsButton = Instantiate(settingsButton, topArea);
+            modsButton.name = text;
+            Button button = modsButton.GetComponent<Button>();
+            button.onClick = new Button.ButtonClickedEvent();
+            button.onClick.AddListener(action);
+
+            TextMeshProUGUI label = modsButton.GetComponentInChildren<TextMeshProUGUI>();
+            label.text = text;
+        }
+
         private bool isModsMenuActive()
         {
             return ModBotUIRoot.Instance.ModsWindow.WindowObject.activeSelf;
         }
 
+        private void spawnDevLaptop()
+        {
+            DebugManager.Instance.SpawnLaptop();
+        }
+
         /// <summary>
-        /// Opens mods panel. I actually made it for CDO mod
+        /// Opens mods panel
         /// </summary>
         /// <param name="onWindowClose"></param>
-        public void OpenModsWindows(Action onWindowClose = null)
+        public void OpenModsMenu(Action onWindowClose = null)
         {
             _actionOnModsPanelClose = onWindowClose;
             openModsMenu();
@@ -245,8 +198,8 @@ namespace InternalModBot
             }
             else
             {
-                if(_vrMainMenu)
-                _vrMainMenu._root.gameObject.SetActive(false);
+                if (_vrMainMenu)
+                    _vrMainMenu._root.gameObject.SetActive(false);
             }
 
             if (_noVrHeadsetDetectedUIMenu)
