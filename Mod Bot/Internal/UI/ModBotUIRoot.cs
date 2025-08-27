@@ -1,6 +1,5 @@
 ﻿using ModLibrary;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace InternalModBot
 {
@@ -9,14 +8,6 @@ namespace InternalModBot
     /// </summary>
     internal class ModBotUIRoot : Singleton<ModBotUIRoot>
     {
-        /// <summary>
-        /// The Console UI
-        /// </summary>
-        public ConsoleUI ConsoleUI;
-        /// <summary>
-        /// The FPS counter in the corner
-        /// </summary>
-        public FPSCounterUI FPSCounter;
         /// <summary>
         /// The modbot sign in UI
         /// </summary>
@@ -37,10 +28,18 @@ namespace InternalModBot
         /// The root canvas
         /// </summary>
         public Canvas Root;
-
+        /// <summary>
+        /// Mods download window
+        /// </summary>
         public ModDownloadWindow DownloadWindow;
-
+        /// <summary>
+        /// Loading bar
+        /// </summary>
         public GenericLoadingBar LoadingBar;
+        /// <summary>
+        /// UIController UI inside debug laptop
+        /// </summary>
+        private ConsoleUI _consoleUi;
 
         /// <summary>
         /// Sets up the mod-bot UI from a modded object
@@ -49,12 +48,6 @@ namespace InternalModBot
         public void Init(ModdedObject moddedObject)
         {
             Root = moddedObject.GetComponent<Canvas>();
-
-            ConsoleUI = gameObject.AddComponent<ConsoleUI>();
-            ConsoleUI.Init(moddedObject.GetObject<Animator>(0), moddedObject.GetObject<GameObject>(1), moddedObject.GetObject<GameObject>(2), moddedObject.GetObject<InputField>(3));
-
-            FPSCounter = gameObject.AddComponent<FPSCounterUI>();
-            FPSCounter.Init(moddedObject.GetObject<Text>(4));
 
             ModBotSignInUI = gameObject.AddComponent<ModBotSignInUI>();
             ModBotSignInUI.Init(moddedObject.GetObject<ModdedObject>(6));
@@ -80,6 +73,15 @@ namespace InternalModBot
             base.transform.eulerAngles = eulerAngles;
             base.transform.localScale = Vector3.one * scale;
         }
-    }
 
+        public void SetConsoleUI(ConsoleUI consoleUi)
+        {
+            _consoleUi = consoleUi;
+        }
+
+        public ConsoleUI GetConsoleUI()
+        {
+            return _consoleUi;
+        }
+    }
 }

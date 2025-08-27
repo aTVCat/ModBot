@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModLibrary;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,7 @@ namespace InternalModBot
         GameObject _consoleTextElementPrefab;
         GameObject _content;
         GameObject _innerHolder;
+        GameObject _top;
         InputField _input;
         ScrollRect _scroll;
 
@@ -39,13 +41,18 @@ namespace InternalModBot
         /// <param name="content"></param>
         /// <param name="innerHolder"></param>
         /// <param name="input"></param>
-        public void Init(Animator animator, GameObject content, GameObject innerHolder, InputField input)
+        public void Init(bool laptopMode)
         {
-            Animator = animator;
-            _content = content;
-            _innerHolder = innerHolder;
-            _input = input;
-            _scroll = innerHolder.GetComponentInChildren<ScrollRect>();
+            ModdedObject moddedObject = base.GetComponent<ModdedObject>();
+
+            Animator = moddedObject.GetObject<Animator>(0);
+            Animator.enabled = !laptopMode;
+            _content = moddedObject.GetObject<GameObject>(1);
+            _innerHolder = moddedObject.GetObject<GameObject>(2);
+            _input = moddedObject.GetObject<InputField>(3);
+            _scroll = _innerHolder.GetComponentInChildren<ScrollRect>();
+            _top = moddedObject.GetObject<GameObject>(4);
+            _top.SetActive(!laptopMode);
 
             _consoleTextElementPrefab = InternalAssetBundleReferences.ModBot.GetObject("ConsoleTextElement");
 

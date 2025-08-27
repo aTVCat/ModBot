@@ -38,6 +38,8 @@ namespace InternalModBot
 
         private bool _isShowingModsMenuOverPauseMenu;
 
+        private DebugLaptopModsConsoleProgram _debugLaptopModsConsoleProgram;
+
         private void Start()
         {
             _vrPauseMenu = FindObjectOfType<VRPauseMenu>();
@@ -55,6 +57,12 @@ namespace InternalModBot
                 NoVRHeadsetDetectedUIMenu noVRHeadsetDetectedUIMenu = FindObjectOfType<NoVRHeadsetDetectedUIMenu>();
                 PatchNoVRHeadsetDetectedUIMenu(noVRHeadsetDetectedUIMenu);
             }
+        }
+
+        internal DebugLaptopModsConsoleProgram GetDebugLaptopModsConsoleProgram()
+        {
+            createModsConsoleProgramIfRequired();
+            return _debugLaptopModsConsoleProgram;
         }
 
         internal void PatchVRMainMenu(VR.UI.MainMenuUI mainMenu)
@@ -177,6 +185,15 @@ namespace InternalModBot
         private void spawnDevLaptop()
         {
             DebugManager.Instance.SpawnLaptop();
+        }
+
+        private void createModsConsoleProgramIfRequired()
+        {
+            if (_debugLaptopModsConsoleProgram) return;
+
+            GameObject gameObject = Instantiate(InternalAssetBundleReferences.ModBot.GetObject("Console"));
+            gameObject.SetActive(true);
+            _debugLaptopModsConsoleProgram = gameObject.AddComponent<DebugLaptopModsConsoleProgram>();
         }
 
         /// <summary>

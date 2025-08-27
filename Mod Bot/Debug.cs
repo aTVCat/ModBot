@@ -29,14 +29,18 @@ namespace ModLibrary
             if (_log == null)
                 _log = "null";
 
-            if (ModBotUIRoot.Instance != null && ModBotUIRoot.Instance.ConsoleUI != null)
+            ModBotUIRoot uiRoot = ModBotUIRoot.Instance;
+            if (uiRoot)
             {
-                ModBotUIRoot.Instance.ConsoleUI.Log(_log);
+                ConsoleUI consoleUI = uiRoot.GetConsoleUI();
+                if (consoleUI)
+                {
+                    consoleUI.Log(_log);
+                    return;
+                }
             }
-            else
-            {
-                Console.WriteLine(_log);
-            }
+
+            Console.WriteLine(_log);
         }
 
         /// <summary>
@@ -74,14 +78,18 @@ namespace ModLibrary
             if (_log == null)
                 _log = "null";
 
-            if (ModBotUIRoot.Instance != null && ModBotUIRoot.Instance.ConsoleUI != null)
+            ModBotUIRoot uiRoot = ModBotUIRoot.Instance;
+            if (uiRoot)
             {
-                ModBotUIRoot.Instance.ConsoleUI.Log(_log, _color);
+                ConsoleUI consoleUI = uiRoot.GetConsoleUI();
+                if (consoleUI)
+                {
+                    consoleUI.Log(_log, _color);
+                    return;
+                }
             }
-            else
-            {
-                Console.WriteLine(_log);
-            }
+
+            Console.WriteLine(_log);
         }
 
         /// <summary>

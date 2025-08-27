@@ -45,8 +45,6 @@ namespace InternalModBot
             catch (Exception e)
             {
                 debug.Log(e.Message + "\n" + e.StackTrace, Color.red);
-
-                ModBotUIRoot.Instance.ConsoleUI.Animator.Play("hideConsole");
             }
 
             GlobalEventManager.Instance.AddEventListener(GlobalEvents.LevelEditorStarted, new Action(ModsManager.Instance.PassOnMod.OnLevelEditorStarted));

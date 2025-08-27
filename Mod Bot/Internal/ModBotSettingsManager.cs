@@ -84,7 +84,7 @@ namespace InternalModBot
                     StaticCoroutineRunner.StartStaticCoroutine(assignKeyFromNextInput(button, inputOption, 3f));
                 });
             }
-            //builder.AddLabelAndButton("Open Console", "F1", new Color(0.3437611f, 0.5951038f, 0.9716981f), null);
+            //builder.AddLabelAndButton("Open UIController", "F1", new Color(0.3437611f, 0.5951038f, 0.9716981f), null);
             //builder.AddLabelAndButton("Toggle FPS label", "F3", new Color(0.3437611f, 0.5951038f, 0.9716981f), null);
 
             builder.AddLabel("Website Integration");
@@ -148,17 +148,6 @@ namespace InternalModBot
             input.Key = foundKey.Value;
 
             buttonText.text = input.Key.ToString();
-        }
-
-        [HarmonyPatch(typeof(SettingsMenu))]
-        static class SettingsMenu_Patch
-        {
-            [HarmonyPostfix]
-            [HarmonyPatch("populateSettings")]
-            static void populateSettings_Postfix()
-            {
-                CreateSettingsWindow(new ModBotSettingsBuilder(_settingsPageModdedObject));
-            }
         }
     }
 }

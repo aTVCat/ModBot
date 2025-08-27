@@ -41,7 +41,7 @@ namespace InternalModBot
 
         public bool IsModInstalled => m_InstalledModInfo != null;
         public string ModName => m_ModInfo.DisplayName;
-        public bool CanInteractWithSpecialData => ModBotSignInUI.HasSignedIn && m_ModInfo != null && !string.IsNullOrEmpty(m_ModInfo.UniqueID);
+        public bool CanInteractWithSpecialData => false;
 
         private static ModsDownloadManager.ModDownloadInfo m_DownloadInfo;
         public static bool IsDownloadingAMod(string id) => m_DownloadInfo != null && m_DownloadInfo.ModInformation != null && id.Equals(m_DownloadInfo.ModInformation.UniqueID);

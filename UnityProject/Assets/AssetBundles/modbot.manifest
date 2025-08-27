@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3290378675
+CRC: 527975842
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5539a915381011aad0c91b54c0156d56
+    Hash: 29ba153222ef0ad78de8aca271423dc9
   TypeTreeHash:
     serializedVersion: 2
-    Hash: d58cfc61902b0dd9782321c49cbc0521
+    Hash: 68b0f1225412d830fd0843ee14f7e8ef
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -25,8 +25,6 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 48
   Script: {instanceID: 0}
-- Class: 54
-  Script: {instanceID: 0}
 - Class: 65
   Script: {instanceID: 0}
 - Class: 74
@@ -41,6 +39,8 @@ ClassTypes:
   Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
 - Class: 114
@@ -79,8 +79,6 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 34943be6dab1ac0428c14d66e2095cba, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
 - Class: 114
@@ -172,13 +170,13 @@ Assets:
 - Assets/Materials/Line.mat
 - Assets/Prefabs/UpgradeScreenButtons/PreviousPageButton.prefab
 - Assets/Images/javascript.png
-- Assets/Prefabs/Console/ConsoleLaptop.prefab
+- Assets/Prefabs/ModsMenu/ModItemPrefab.prefab
 - Assets/Prefabs/Console/ConsoleTextElement.prefab
 - Assets/Prefabs/ModOptions/PageButton.prefab
-- Assets/Prefabs/ModsMenu/ModItemPrefab.prefab
 - Assets/Prefabs/ModOptions/Checkbox.prefab
 - Assets/Images/modbot.png
 - Assets/Prefabs/ModOptions/CustomKeyCodeInput.prefab
+- Assets/Prefabs/Console/Console.prefab
 - Assets/Prefabs/ModOptions/DropDown.prefab
 - Assets/Prefabs/ModBotOptions/ModBotOptionsLabelAndButton.prefab
 - Assets/Prefabs/ModOptions/Label.prefab
