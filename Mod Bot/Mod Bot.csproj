@@ -57,10 +57,8 @@
     <Compile Include="Internal\Patches\Character_Patch.cs" />
     <Compile Include="Internal\Patches\AnalyticsManager_Patch.cs" />
     <Compile Include="Internal\Patches\DebugLaptop_Patch.cs" />
-    <Compile Include="Internal\Patches\EscMenu_Patch.cs" />
     <Compile Include="Internal\Patches\MainMenuUI_Patch.cs" />
     <Compile Include="Internal\Patches\VersionText_Patch.cs" />
-    <Compile Include="Internal\Patches\ErrorWindow_Patch.cs" />
     <Compile Include="Internal\Patches\ResourceRequest_Patch.cs" />
     <Compile Include="Internal\Patches\Resources_Patch.cs" />
     <Compile Include="Internal\Reflection\ConstructorInfoKey.cs" />
